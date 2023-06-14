@@ -1,0 +1,105 @@
+*{
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+}
+
+.navbar-divider {
+    height: 65px;
+    border-right : 1px solid black;
+    margin-right: 20px;
+}
+
+.navbar-title h1 {
+    font-weight: bolder;
+    font-size: 24px;
+}
+
+.navbar-nav, li{
+    font-weight: bolder;
+}
+
+.custom-nav-item{
+    padding-right: 50px;
+}
+
+header {
+    /* Gaya CSS untuk header */
+    margin-top: 10px;
+    margin-bottom: 20px; /* Atur jarak bawah header */
+    margin-left: 40px;
+    margin-right: 40px;
+}
+  
+section {
+    /* Gaya CSS untuk section */
+    margin-top: 20px; /* Atur jarak atas section */
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-bottom: 80px;
+}
+
+form{
+    padding-top: 10px;
+}
+
+input[type="datetime-local"] {
+    /* Atur warna latar belakang dan warna teks */
+    background-color: #f2f2f2;
+    color: #333;
+
+    /* Atur padding dan margin */
+    padding: 10px;
+    margin-bottom: 10px;
+
+    /* Atur ukuran font */
+    font-size: 14px;
+
+    /* Atur border dan border-radius */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    /* Atur lebar elemen input */
+    width: 50%;
+
+    /* Atur tampilan saat elemen tidak aktif */
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn{
+    border-radius: 20px;
+    padding-left: 30px;
+    padding-right: 30px
+}
+
+#logo{
+    width: 150px;
+    height: 70px;
+}
+
+.bg-title, h5{
+    font-weight: bolder;
+    background-color: #c9efff;
+    padding: 10px;
+}
+
+.input-group-text{
+    align-items: center !;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+.input-container label {
+    margin-right: 10px;
+}
+
+/*css untuk laporan-pinjam.html*/
+.bg-title, h3{
+    font-weight: bolder;
+    background-color: #c9efff;
+    padding: 10px;
+}

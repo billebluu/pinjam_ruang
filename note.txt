@@ -1,0 +1,255 @@
+<?php
+if(isset($_POST["submit"])){
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+
+  $sql = mysqli_query($conn, "SELECT * FROM user_login WHERE
+   email = '$_POST[email]' AND password = '$_POST[password]'" );
+
+  $cek = mysqli_num_rows($sql);
+  //cek email
+  if($cek > 0){
+    $_SESSION['email'] = $_POST['email'];
+    echo "<meta http-equiv=refresh content=0; URL='user-home.php'>";
+  }else{
+    echo "<p align=center><b>Username dan Password salah !</b></p>";
+    echo "<meta http-equiv=refresh content=2; URL='user-login.php'>";
+  }
+  //   //cek password
+  //   $row = mysqli_fetch_assoc($result);
+  //   if(mysqli_num_rows($pw_user, $row["password"])){
+  //     header("Location: user-home.php");
+  //     exit;
+  //   }else{
+  //     header("Location: user-home.php");
+  //     exit;
+  //   }
+  // }
+}
+?> -->
+$query = "SELECT * FROM user WHERE email = '$email";
+$query1 = "SELECT * FROM user WHERE nama= '$nama";
+$query2 = "SELECT * FROM user WHERE nomor_telepon= '$nomor_telepon";
+$query3 = "SELECT * FROM user WHERE status= '$status";
+$query4 = "SELECT * FROM user WHERE jenis_kelamin= '$jenis_kelamin";
+$query5 = "SELECT * FROM user WHERE nim_nip= '$nim_nip";
+
+
+
+
+
+// Konfigurasi koneksi ke database
+$host = 'localhost';
+$db = 'db_pinjamruang';
+$user = 'root';
+$password = '';
+
+// Membuat koneksi
+$conn = new mysqli($host, $user, $password, $db);
+
+
+// Memeriksa kesalahan koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Memeriksa apakah form login telah dikirim
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Mencegah serangan SQL Injection
+    $email = mysqli_real_escape_string($conn, $email);
+
+    // Mencari pengguna berdasarkan email
+    $query = "SELECT * FROM login_user WHERE email='$email'";
+    $result = $conn->query($query);
+
+    if ($result) {
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+
+            // Memeriksa kecocokan password
+            if ($password === $user['password']) {
+                // Login berhasil, lakukan tindakan yang diperlukan
+                // Misalnya, mengatur sesi pengguna atau mengalihkan ke halaman lain
+                session_start();
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+                header('Location: user-home.php');
+                exit();
+            } else {
+                // Password tidak cocok
+                echo "<script>
+                alert('Password Salah!');
+                window.location.href = 'user-login.php';
+                </script>";
+            }
+        } else {
+            // Pengguna tidak ditemukan
+            echo "<script>
+                alert('User Tidak Ditemukan!');
+                window.location.href = 'user-login.php';
+                </script>";
+        }
+    } else {
+        // Error dalam query SQL
+        echo "Error: " . $conn->error;
+    }
+}
+
+// Tutup koneksi
+$conn->close();
+
+
+
+
+
+
+<div class="container-fluid">
+                  <button class="navbar-toggler" type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse bg-body-secondary" id="navbarSupportedContent" style="background-color: rgb(217,217,217);">
+                    <ul class="nav justify-content-end" style="background-color: rgb(217,217,217);">
+                      <li class="nav-item" style="background-color: rgb(217,217,217);">
+                        <img src="logo.png" alt="Logo" width="70%" class="d-inline-block align-text-top">
+                      </li> 
+                      <li class="nav-item" style="background-color: rgb(217,217,217);">
+                        <a class="nav-link" aria-current="page" href=# style="color: rgb(0, 0, 0);"><b></b></a>
+                      </li>                 
+                    </ul>
+                   
+                  </div>
+                </div>  
+                <div class="container-fluid">
+                  <button class="navbar-toggler" type="button" style="background-color: rgb(217,217,217);" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav nav-tabs me-auto mb-2 mb-lg-0">
+                      <ul class="nav justify-content-start" style="background-color: rgb(217,217,217);">
+                        <li class="nav-item" style="background-color: rgb(217,217,217);">
+                          <a class="nav-link" aria-current="page" href="user-home.html" style="color: rgb(0, 0, 0);"><b>Home</b></a>
+                        </li>
+                        <li class="nav-item dropdown bg-body-secodary" style="background-color: rgb(217,217,217);">
+                          <a class="nav-link dropdown-toggle bg-body-secodary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgb(0, 0, 0);"><b>
+                              Sobat UNS
+                          </b></a>
+                            <ul class="dropdown-menu bg-body-secodary" style="background-color: rgb(217,217,217);">
+                              <li><a class="dropdown-item bg-body-secodary" href="user-profile.html" style="background-color: rgb(217,217,217);">Lihat Profil</a></li>
+                              <li><a class="dropdown-item bg-body-secodary" href="login.html" style="background-color: rgb(217,217,217);">Logout</a></li>
+                            </ul>
+                        </li>
+                      </ul>
+                    </ul>
+                  </div>
+                </div>
+                <!-- <div class="container-fluid">
+                  <button class="navbar-toggler" type="button" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse bg-body-secondary" id="navbarSupportedContent" style="background-color: rgb(217,217,217);">
+                    <ul class="nav justify-content-start" style="background-color: rgb(217,217,217);">
+                      <li class="nav-item" style="background-color: rgb(217,217,217);">
+                        <a class="nav-link" aria-current="page" href="user-home.html" style="color: rgb(0, 0, 0);"><b>Home</b></a>
+                      </li>
+                      <li class="nav-item dropdown bg-body-secodary" style="background-color: rgb(217,217,217);">
+                        <a class="nav-link dropdown-toggle bg-body-secodary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgb(0, 0, 0);"><b>
+                            Sobat UNS
+                        </b></a>
+                          <ul class="dropdown-menu bg-body-secodary" style="background-color: rgb(217,217,217);">
+                            <li><a class="dropdown-item bg-body-secodary" href="user-profile.html" style="background-color: rgb(217,217,217);">Lihat Profil</a></li>
+                            <li><a class="dropdown-item bg-body-secodary" href="login.html" style="background-color: rgb(217,217,217);">Logout</a></li>
+                          </ul>
+                      </li>
+                    </ul>
+                   
+                  </div>
+                </div>   -->
+              
+
+
+            <form class="row g-3" action="" method="post" enctype="multipart/form-data">
+                  <?php foreach ($user as $row): ?>
+                    <div class="col-md-5">
+                        <label for="email" class="form-label">Email*</label>
+                        <input type="text" class="form-control" name="email" value="<?php echo $row['email']; ?>" id="email" disabled>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="phone" class="form-label">Nomor Telepon</label>
+                        <input type="text" class="form-control" id="phone" value="<?php echo $row['phone']; ?>" name="phone" disabled>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="nama" class="form-label">Nama*</label>
+                        <input type="text" class="form-control" id="nama" value="<?php echo $row['nama']; ?>" name="nama" disabled>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" class="form-control" id="status" value="<?php echo $row['status']; ?>" name="status" disabled>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="gender" class="form-label">Jenis Kelamin</label>
+                        <input type="text" class="form-control" id="gender" value="<?php echo $row['gender']; ?>" name="gender" disabled>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="nim_nip" class="form-label">NIM/NIP</label>
+                        <input type="text" class="form-control" id="nim_nip" value="<?php echo $row['nim_nip']; ?>" name="nim_nip" disabled>
+                    </div>
+                </form>
+
+
+
+                                                    <div class="col-md-5">
+                                                        <label for="nama_pengaju" class="form-label">Nama Pengaju</label>
+                                                        <input type="text" class="form-control" name="nama_pengaju"  id="nama_pengaju" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="nama_ruang" class="form-label">Ruang</label>
+                                                        <input type="text" class="form-control" id="nama_ruang"  name="nama_ruang" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="text" class="form-control" id="email"  name="email" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="kegiatan" class="form-label">Kegiatan</label>
+                                                        <input type="text" class="form-control" id="kegiatan"  name="kegiatan" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="phone" class="form-label">No. Telephone</label>
+                                                        <input type="text" class="form-control" id="phone"  name="phone" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="gender" class="form-label">Gender</label>
+                                                        <input type="time" class="form-control" id="gender"  name="gender" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="waktu" class="form-label">Waktu</label>
+                                                        <input type="time" class="form-control" id="waktu"  name="waktu" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="nim_nip" class="form-label">NIM/NIP</label>
+                                                        <input type="text" class="form-control" id="nim_nip"  name="nim_nip" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="tgl_awal" class="form-label">Tanggal Awal Peminjaman</label>
+                                                        <input type="date" class="form-control" id="tgl_awal"  name="tgl_awal" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="tgl_akhir" class="form-label">Tanggal Akhir Peminjaman</label>
+                                                        <input type="date" class="form-control" id="tgl_akhir"  name="tgl_akhir" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="ktm" class="form-label">KTM</label>
+                                                        <input type="file" class="form-control" id="ktm"  name="ktm" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="sik" class="form-label">SIK</label>
+                                                        <input type="file" class="form-control" id="sik"  name="sik" required>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <br><br>
+                                                        <!-- type="submit" name="submit" -->
+                                                        <button type="submit" name="submit" class="button-data">Simpan</button>
+                                                    </div>
