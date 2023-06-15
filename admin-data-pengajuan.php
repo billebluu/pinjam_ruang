@@ -280,7 +280,7 @@
                                                             <?= $row["status"]; ?>
                                                         </td>
                                                         <td>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255);"><a class="nav-link" href="admin-more-data-pengajuan.php?id=<?= $row['id']; ?>">More</a></button>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255);"><a class="nav-link" href="admin-more-data-pengajuan.php?id=<?= $row['id_ajuan']; ?>">More</a></button>
                                                             <?php if($row["status"]=='PENDING'):?>
                                                             <button class="button-action" style="background-color: rgb(201,239,255);" data-bs-toggle="modal" data-bs-target="#modalConfirmation"> <a class="nav-link" >Validasi</a></button>
                                                             <?php endif ?>
@@ -302,8 +302,8 @@
                                                             <h1 class="mx-5 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Yakin untuk validasi?</h1>
                                                         </div>
                                                         <div class="mt-3">
-                                                            <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal"><a class="nav-link" href="admin-validasi-tolak.php?id=<?= $row['id']; ?>">Tolak</a></button>
-                                                            <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;"><a class="nav-link" href="admin-validasi-terima.php?id=<?= $row['id']; ?>">Terima</a></button>         
+                                                            <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal"><a class="nav-link" href="admin-validasi-tolak.php?id=<?= $row['id_ajuan']; ?>">Tolak</a></button>
+                                                            <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;"><a class="nav-link" href="admin-validasi-terima.php?id=<?= $row['id_ajuan']; ?>">Terima</a></button>         
                                                         </div>
                                                     </div>
                                                 </div>

@@ -10,7 +10,7 @@ $id = $_GET["id"];
 //query data mahasiswa berdasar id
 $data = "SELECT * FROM admin WHERE id = $id";
 $user = query($data);
-$data_pengajuan = query("SELECT * FROM data_pengajuan WHERE id=$id")[0];
+$data_pengajuan = query("SELECT * FROM data_pengajuan WHERE id_ajuan=$id")[0];
 // ambil id dari URL
 
 
@@ -306,14 +306,13 @@ if (isset($_POST["submit"])) {
                                                         <label for="sik">Berkas</label><br><br>
                                                         <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="<?= $data_pengajuan["KTM"]; ?>">Lihat KTM</a></button>
                                                         <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="<?= $data_pengajuan["SIK"]; ?>">Lihat SIK</a></button>
-                                                        <?php if($data_pengajuan["status"]=='PENDING'):?>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255);" data-bs-toggle="modal" data-bs-target="#modalConfirmation"> <a class="nav-link" >Validasi</a></button>
-                                                            <?php endif ?>
+                                                        
                                                     </div>
                                                         </form>
                                                     <div class="col-md-5 mt-3">
-                                                            
-                                                            
+                                                            <?php if($data_pengajuan["status"]=='PENDING'):?>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255);" data-bs-toggle="modal" data-bs-target="#modalConfirmation"> <a class="nav-link" >Validasi</a></button>
+                                                            <?php endif ?>   
                                                 </div>
                                             
                                           </section>
@@ -340,8 +339,8 @@ if (isset($_POST["submit"])) {
                             <h1 class="mx-5 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Yakin untuk validasi?</h1>
                         </div>
                         <div class="mt-3">
-                            <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal"><a class="nav-link" href="admin-validasi-tolak.php?id=<?= $data_pengajuan['id']; ?>">Tolak</a></button>
-                            <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;"><a class="nav-link" href="admin-validasi-terima.php?id=<?= $data_pengajuan['id']; ?>">Terima</a></button>         
+                            <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal"><a class="nav-link" href="admin-validasi-tolak.php?id=<?= $data_pengajuan['id_ajuan']; ?>">Tolak</a></button>
+                            <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;"><a class="nav-link" href="admin-validasi-terima.php?id=<?= $data_pengajuan['id_ajuan']; ?>">Terima</a></button>         
                         </div>
                     </div>
                 </div>

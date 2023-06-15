@@ -10,10 +10,11 @@
     //query data mahasiswa berdasar id
     $data = "SELECT * FROM admin WHERE id = $id";
     $user = query($data);
+    $data2 = query("SELECT * FROM data_ruangan");
 
     if(isset($_POST["submit"])){
         //
-        if(tambah2($_POST,$id) > 0){
+        if(tambah($_POST,$id) > 0){
             echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
                 var modal = new bootstrap.Modal(document.getElementById('modalSuccessAddData'));
@@ -248,70 +249,93 @@
                                         <section>
                                             <div class="container-profile" align="left">
                                                 <form class="row g-3" action="" method="post" enctype="multipart/form-data">
-                                                    <div class="col-md-5">
-                                                        <label for="nama_pengaju" class="form-label">Nama Pengaju</label>
-                                                        <input type="text" class="form-control" name="nama_pengaju"  id="nama_pengaju" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="nama_ruang" class="form-label">Ruang</label>
-                                                        <input type="text" class="form-control" id="nama_ruang"  name="nama_ruang" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="email" class="form-label">Email</label>
-                                                        <input type="text" class="form-control" id="email"  name="email" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="kegiatan" class="form-label">Kegiatan</label>
-                                                        <input type="text" class="form-control" id="kegiatan"  name="kegiatan" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="phone" class="form-label">No. Telephone</label>
-                                                        <input type="text" class="form-control" id="phone"  name="phone" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="waktu" class="form-label">Waktu</label>
-                                                        <input type="time" class="form-control" id="waktu"  name="waktu" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="nim_nip" class="form-label">NIM/NIP</label>
-                                                        <input type="text" class="form-control" id="nim_nip"  name="nim_nip" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="tgl_awal" class="form-label">Tanggal Awal Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tgl_awal"  name="tgl_awal" required>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label for="tgl_akhir" class="form-label">Tanggal Akhir Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tgl_akhir"  name="tgl_akhir" required>
-                                                    </div>
-                                                    <!-- <div class="col-md-5">
-                                                        <label for="ktm" class="form-label">Link KTM</label><br>
-                                                        <input type="text" class="form-control" id="ktm"  name="ktm" required>
-                                                        <p style="font-size:14px">Format Nama File : Nama Lengkap_KTM.pdf</p>
-                                                        <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/1lBqem1sdjz5VNBS_nGEdAkhV9VdluxFU?usp=share_link">KTM</a></button>
-                                                        <br><br>
-                                                        <label for="sik" class="form-label">Link SIK</label><br>
-                                                        <p style="font-size:14px">Format Nama File : Nama Lengkap_SIK.pdf</p>
-                                                        <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/12OdZkHodvOrIGJlkAoR934yThD1w9ksT?usp=share_link">SIK</a></button>                                                         
-                                                    </div> -->
-                                                    <div class="col mb-3">
-                                                        <label for="ktm" class="form-label">Upload SIK</label><br>
-                                                        <input id="ktm" type="file" accept="application/pdf" name="ktm">
-                                                    </div>
-                                                    <div class="col mb-3">
-                                                        <label for="sik" class="form-label">Upload KTM</label><br>
-                                                        <input id="sik" type="file" accept="application/pdf" name="sik">
-                                                    </div>
-                                                    <!-- <div class="col-md-5">
-                                                        <label for="sik" class="form-label">Link SIK</label>
-                                                        <input type="text" class="form-control" id="sik"  name="sik" required>
-                                                    </div>-->
-
-                                                    <div class="col-12">
-                                                        <br><br>
-                                                        <type="submit" name="submit">
-                                                        <button type="submit" name="submit" class="button-data">Simpan</button>
-                                                    </div>
+                                                <div class="col">
+                <div class="col mb-3">
+                    <label for="nama_pengaju" class="form-label">Nama Pengaju</label>
+                    <input type="text" name="nama_pengaju" id="nama_pengaju" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label for="nama_ruang" class="form-label">No. Telepon</label>
+                    <input type="text" name="phone" id="phone" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label for="nim_nip" class="form-label">NIM / NIP</label>
+                    <input type="text" name="nim_nip" id="nim_nip" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label class="form-label d-block">Jenis Kelamin</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="lakiLaki" type="radio" name="gender" value="Laki-laki" required>
+                        <label class="form-check-label" for="lakiLaki">Laki-laki</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="perempuan" type="radio" name="gender" value="Perempuan" required>
+                        <label class="form-check-label" for="perempuan">Perempuan</label>
+                    </div>
+                </div>
+                <div class="col mb-3">
+                    <label for="tgl_awal" class="form-label">Tanggal Awal</label>
+                    <input type="date" name="tgl_awal" id="tgl_awal" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label for="tgl_akhir" class="form-label">Tanggal Akhir</label>
+                    <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control" required>
+                </div>
+                <br>
+                <button style="margin-right:100px;" class="button-data" type="submit" name="submit">Simpan</button>
+            </div>
+            <div class="col">
+                <div class="col mb-3">
+                    <label for="phone" class="form-label">Nama Ruang</label>
+                    <select class="form-select form-select-md" aria-label=".form-select-lg example" id="nama_ruang" name="nama_ruang">
+                        <option selected></option>
+                        <?php foreach ($data2 as $row) : ?>
+                            <option value="<?php echo $row['nama_ruang']; ?>"><?php echo $row['nama_ruang']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col mb-3">
+                    <label for="waktu" class="form-label">Waktu Peminjaman</label>
+                    <input type="time" name="waktu" id="waktu" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label for="kegiatan" class="form-label">Kegiatan</label>
+                    <input type="text" name="kegiatan" id="kegiatan" class="form-control" required>
+                </div>
+                <div class="col mb-3">
+                    <label class="form-label d-block">Status</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="mahasiswa" type="radio" name="statusUser" value="Mahasiswa" required>
+                        <label class="form-check-label" for="mahasiswa">Mahasiswa</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" id="dosen" type="radio" name="statusUser" value="Dosen" required>
+                        <label class="form-check-label" for="dosen">Dosen</label>
+                    </div>
+                </div>
+                <div class="col mb-3">
+                    <label for="sik" class="form-label">Upload SIK</label><br>
+                    <input id="sik" type="file" accept="application/pdf" name="sik">
+                </div>
+                <div class="col mb-3">
+                    <label for="ktm" class="form-label">Upload KTM</label><br>
+                    <input id="ktm" type="file" accept="application/pdf" name="ktm">
+                </div>
+                <!-- <div class="col-md-10">
+                    <label for="ktm" class="form-label">Upload KTM</label><br>
+                    <p style="font-size:14px">Format Nama File : Nama Lengkap_KTM.pdf</p>
+                    <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/1lBqem1sdjz5VNBS_nGEdAkhV9VdluxFU?usp=share_link">KTM</a></button>
+                    <br><br>
+                    <label for="sik" class="form-label">Upload SIK</label><br>
+                    <p style="font-size:14px">Format Nama File : Nama Lengkap_SIK.pdf</p>
+                    <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/12OdZkHodvOrIGJlkAoR934yThD1w9ksT?usp=share_link">SIK</a></button>                                                         -->
+                <!-- </div>  -->
+                
+            </div>
                                                 </form>
                                             </div>
                                           </section>

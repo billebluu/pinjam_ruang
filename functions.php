@@ -673,6 +673,8 @@
         $nim_nip = htmlspecialchars($data["nim_nip"]);
         $tgl_awal = htmlspecialchars($data["tgl_awal"]);
         $tgl_akhir = htmlspecialchars($data["tgl_akhir"]);
+        $gender = isset($data["gender"]) ? htmlspecialchars($data["gender"]) : ""; // Mengambil nilai gender dari elemen radio button atau checkbox
+        $statusUser = isset($data["statusUser"]) ? htmlspecialchars($data["statusUser"]) : ""; // Mengambil nilai statusUser dari elemen radio button atau checkbox
         // Set status ajuan menjadi pending
         $status = "PENDING";
 
@@ -939,9 +941,9 @@
         global $conn;
         $data2 = "DITERIMA";
         mysqli_query($conn, "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik) 
-            SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id = $id");
+            SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id");
         
-        $query =  "UPDATE data_pengajuan SET status = '$data2' WHERE id=$id";
+        $query =  "UPDATE data_pengajuan SET status = '$data2' WHERE id_ajuan=$id";
         // "INSERT INTO data_pengajuan VALUES
         // ('','','','','','','','','','',
         // '$data2','','','','')" ;
@@ -957,7 +959,7 @@
         $data2 = "DITOLAK";
         // mysqli_query($conn, "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik) 
         //     SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id = $id");
-        $query =  "UPDATE data_pengajuan SET status = '$data2' WHERE id=$id";
+        $query =  "UPDATE data_pengajuan SET status = '$data2' WHERE id_ajuan=$id";
         // "INSERT INTO data_pengajuan VALUES
         // ('','','','','','','','','','',
         // '$data2','','','','')" ;
