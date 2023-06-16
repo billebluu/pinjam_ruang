@@ -12,8 +12,6 @@
         window.location.href = 'admin-data-pengajuan.php?id=$id';
         </script>";
     }else{
-        echo"
-        alert('GAGAL');
-        ";
+       
     }
 ?>

@@ -10,10 +10,28 @@
     //query data mahasiswa berdasar id
     $data = "SELECT * FROM admin WHERE id = $id";
     $user = query($data);
-    $data2 = query("SELECT nama_ruang FROM data_ruangan WHERE NOT EXISTS (SELECT 1 FROM data_jadwal WHERE data_ruangan.nama_ruang = data_jadwal.nama_ruang)");
+    $data2 = query("SELECT * FROM data_ruangan");
 
-    if(isset($_POST["submit"])){
-        //
+    if(isset($_POST["submit"])) {
+        // Mendapatkan data dari form
+    $tgl_awal = $_POST["tgl_awal"];
+    $nama_ruang = $_POST["nama_ruang"];
+    $waktu = $_POST["waktu"];
+
+    // Memeriksa apakah data jadwal ruangan sudah ada
+    $query_check = "SELECT COUNT(*) FROM data_jadwal WHERE tgl_awal = '$tgl_awal' AND nama_ruang = '$nama_ruang' AND waktu = '$waktu'";
+    $result_check = mysqli_query($conn, $query_check);
+    $count = mysqli_fetch_row($result_check)[0];
+
+        // Jika data pengajuan yang sama sudah ada, tampilkan pesan error
+        if($count > 0) {
+            echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var modal = new bootstrap.Modal(document.getElementById('modalFailAddDataUsed'));
+                modal.show();
+            });
+            </script>";
+        } else {
         if(tambah($_POST,$id) > 0){
             echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -33,6 +51,7 @@
             </script>";
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -359,7 +378,7 @@
                     </div>
                     <div class="flex-column">
                         <div>
-                            <h1 class="mx-4 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Data Laporan Peminjaman Baru Berhasil Ditambahkan!</h1>
+                            <h1 class="mx-4 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Data Pengajuan Peminjaman Baru Berhasil Ditambahkan!</h1>
                         </div>
                     </div>
                 </div>
@@ -375,7 +394,23 @@
                     </div>
                     <div class="flex-column">
                         <div>
-                            <h1 class="mx-4 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Data Laporan Peminjaman Baru Gagal Ditambahkan!</h1>
+                            <h1 class="mx-4 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Data Pengajuan Peminjaman Baru Gagal Ditambahkan!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- Modal Gagal Add Data Terpake -->
+         <div class="modal fade" id="modalFailAddDataUsed" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" data-bs-dismiss="modal">
+                <div class="modal-content p-4 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
+                    <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
+                        <i class="position-absolute top-50 start-50 translate-middle fa-solid fa-xmark fa-2xl" style="color: #000000; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <div class="flex-column">
+                        <div>
+                            <h1 class="mx-4 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Jadwal Ruangan Sudah Terisi!</h1>
                         </div>
                     </div>
                 </div>

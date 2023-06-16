@@ -940,9 +940,18 @@
     function validasiTerima($id) {
         global $conn;
         $data2 = "DITERIMA";
-        mysqli_query($conn, "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik) 
-            SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id");
-        
+        // mysqli_query($conn, "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik) && INSERT INTO data_jadwal (nama_ruang, kegiatan, penyelenggara, waktu, tgl_awal, tgl_akhir)
+        //     SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id");
+        // Memasukkan data pengajuan ke tabel data_laporan
+        $query_laporan = "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik)
+            SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id";
+        mysqli_query($conn, $query_laporan);
+
+        // Memasukkan data pengajuan ke tabel data_jadwal dengan penyelenggara = nama_pengaju
+        $query_jadwal = "INSERT INTO data_jadwal (nama_ruang, kegiatan, penyelenggara, waktu, tgl_awal, tgl_akhir)
+            SELECT nama_ruang, kegiatan, nama_pengaju, waktu, tgl_awal, tgl_akhir FROM data_pengajuan WHERE id_ajuan = $id";
+        mysqli_query($conn, $query_jadwal);
+
         $query =  "UPDATE data_pengajuan SET status = '$data2' WHERE id_ajuan=$id";
         // "INSERT INTO data_pengajuan VALUES
         // ('','','','','','','','','','',

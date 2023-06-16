@@ -10,36 +10,51 @@ if(!isset($_SESSION["login"])){
     $data = "SELECT * FROM user WHERE id = $id";
     $user = query($data)[0];
 
-    $data2 = query("SELECT nama_ruang FROM data_ruangan WHERE NOT EXISTS (SELECT 1 FROM data_jadwal WHERE data_ruangan.nama_ruang = data_jadwal.nama_ruang)");
+    $data2 = query("SELECT * FROM data_ruangan");
 
     $showSucces = true;
     $showDanger = true;
     $showSubmit;
 
-    if (isset($_POST["submit"])) {
-        $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
+    if(isset($_POST["submit"])) {
+        // Mendapatkan data dari form
+        $tgl_awal = $_POST["tgl_awal"];
+        $nama_ruang = $_POST["nama_ruang"];
+        $waktu = $_POST["waktu"];
+
+        // Memeriksa apakah data jadwal ruangan sudah ada
+        $query_check = "SELECT COUNT(*) FROM data_jadwal WHERE tgl_awal = '$tgl_awal' AND nama_ruang = '$nama_ruang' AND waktu = '$waktu'";
+        $result_check = mysqli_query($conn, $query_check);
+        $count = mysqli_fetch_row($result_check)[0];
+
+        // Jika data pengajuan yang sama sudah ada, tampilkan pesan error
+        if($count > 0) {
+            $showSubmit = 2; //tambahan
+        } else {
+            $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
     
-        if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['waktu'], $_POST['nim_nip'], $_POST['tgl_awal'], $_POST['tgl_akhir'], $_POST['gender'], $_POST['statusUser'])) {
-            // Cek apakah semua input yang diperlukan diisi
-            $id = $id; // Ganti dengan nilai id yang sesuai
-            $result = tambah($_POST, $id);
-            if ($result > 0) {
-                $showSubmit = 1; // Jika berhasil, set $showSubmit menjadi 1
-                // echo "
-                // <script>
-                //     var xhr = new XMLHttpRequest();
-                //     xhr.open('POST', 'user-notifikasi.php', true);
-                //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //     xhr.send('status=TERKIRIM');
-                // </script>
-                // ";
+            if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['waktu'], $_POST['nim_nip'], $_POST['tgl_awal'], $_POST['tgl_akhir'], $_POST['gender'], $_POST['statusUser'])) {
+                // Cek apakah semua input yang diperlukan diisi
+                $id = $id; // Ganti dengan nilai id yang sesuai
+                $result = tambah($_POST, $id);
+                if ($result > 0) {
+                    $showSubmit = 1; // Jika berhasil, set $showSubmit menjadi 1
+                    // echo "
+                    // <script>
+                    //     var xhr = new XMLHttpRequest();
+                    //     xhr.open('POST', 'user-notifikasi.php', true);
+                    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    //     xhr.send('status=TERKIRIM');
+                    // </script>
+                    // ";
+                }
             }
-        }
-    
-        if ($showSubmit == 0) {
-            $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
-        }
+        
+            if ($showSubmit == 0) {
+                $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
+            }
     }
+}
     // if(isset($_POST["submit"])){
     //     // var_dump($_POST);
     //     // echo "<br>";
@@ -261,6 +276,11 @@ if(!isset($_SESSION["login"])){
                 Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            <!-- alert baru -->
+            <div class="alert alert-danger-used alert-dismissible mt-4" id="myAlertFail2">
+                Ruangan sudah terisi. Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 
             <div class="alert alert-success alert-dismissible mt-4" id="myAlertSuccess">
                 Formulir peminjaman ruang berhasil dikirim.
@@ -364,7 +384,9 @@ if(!isset($_SESSION["login"])){
             $(".alert-success").show();
         <?php } elseif ($showSubmit == 0) { ?>
             $(".alert-danger").show();
-        <?php } ?>
+        <?php } elseif ($showSubmit == 2) { ?>
+            $(".alert-danger-used").show(); //tambahan
+        <?php }?>
     });
     </script>
     <!-- <script>
