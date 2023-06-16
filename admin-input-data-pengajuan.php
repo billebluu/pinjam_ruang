@@ -10,7 +10,7 @@
     //query data mahasiswa berdasar id
     $data = "SELECT * FROM admin WHERE id = $id";
     $user = query($data);
-    $data2 = query("SELECT * FROM data_ruangan");
+    $data2 = query("SELECT nama_ruang FROM data_ruangan WHERE NOT EXISTS (SELECT 1 FROM data_jadwal WHERE data_ruangan.nama_ruang = data_jadwal.nama_ruang)");
 
     if(isset($_POST["submit"])){
         //
@@ -290,7 +290,7 @@
             </div>
             <div class="col">
                 <div class="col mb-3">
-                    <label for="phone" class="form-label">Nama Ruang</label>
+                    <label for="nama_ruang" class="form-label">Nama Ruang</label>
                     <select class="form-select form-select-md" aria-label=".form-select-lg example" id="nama_ruang" name="nama_ruang">
                         <option selected></option>
                         <?php foreach ($data2 as $row) : ?>

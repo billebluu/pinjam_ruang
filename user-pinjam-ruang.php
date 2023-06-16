@@ -10,7 +10,7 @@ if(!isset($_SESSION["login"])){
     $data = "SELECT * FROM user WHERE id = $id";
     $user = query($data)[0];
 
-    $data2 = query("SELECT * FROM data_ruangan");
+    $data2 = query("SELECT nama_ruang FROM data_ruangan WHERE NOT EXISTS (SELECT 1 FROM data_jadwal WHERE data_ruangan.nama_ruang = data_jadwal.nama_ruang)");
 
     $showSucces = true;
     $showDanger = true;
