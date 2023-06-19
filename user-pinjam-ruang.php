@@ -277,8 +277,8 @@ if(!isset($_SESSION["login"])){
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <!-- alert baru -->
-            <div class="alert alert-danger-used alert-dismissible mt-4" id="myAlertFail2">
-                Ruangan sudah terisi. Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
+            <div class="alert alert-danger alert-unavailable-room alert-dismissible mt-4" id="myAlertFail2">
+                Ruang yang Anda pilih pada waktu tersebut sudah terisi. Silakan pilih ruangan lain!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
@@ -385,7 +385,7 @@ if(!isset($_SESSION["login"])){
         <?php } elseif ($showSubmit == 0) { ?>
             $(".alert-danger").show();
         <?php } elseif ($showSubmit == 2) { ?>
-            $(".alert-danger-used").show(); //tambahan
+            $(".alert-unavailable-room").show(); //tambahan
         <?php }?>
     });
     </script>

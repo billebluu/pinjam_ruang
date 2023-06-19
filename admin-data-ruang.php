@@ -249,6 +249,7 @@
                                                     <th scope="col">Nama Ruangan</th>
                                                     <th scope="col">Kapasitas</th>
                                                     <th scope="col">Fasilitas</th>
+                                                    <th scope="col" colspan="2">Manajemen</th>
                                                     <th scope="col"></th>
                                                   </tr>
                                                   
@@ -264,10 +265,12 @@
                                                         <td><?= $row["kapasitas"]; ?></td>
                                                         <td><?= $row["fasilitas"]; ?></td>
                                                         <td>
-                                                            <div class=button-container>
+                                                            <!-- <div class=button-container> -->
                                                             <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 25px;"> <a href="admin-edit-data-ruang.php?id=<?= $row["id"]; ?>" class="nav-link">Edit</a></button>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 25px;" data-bs-toggle="modal" data-bs-target="#modalConfirmation"><a href="admin-delete-data-ruang.php?id=<?= $row["id"]; ?>" class="nav-link">Delete</a></button>
-                                                        </div>
+                                                            <!-- </div> -->
+                                                        </td>
+                                                        <td>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 22px;" data-bs-toggle="modal" data-bs-target="#modalDelete"> <a class="nav-link" >Delete</a></button>
                                                         </td>
                                                       </tr>
                                                       <?php $i++; ?>
@@ -287,8 +290,8 @@
             </div>
         </div>
 
-        <!-- Modal Validasi -->
-        <div class="modal fade" id="modalConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <!-- Modal Hapus Data Ruang -->
+        <div class="modal fade" id="modalDelete" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content p-5 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
                     <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
@@ -300,7 +303,7 @@
                                 </div>
                                 <div class="mt-3">
                                     <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal">Tidak</button>
-                                    <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;" data-bs-toggle="modal" data-bs-target="#modalDeleteData"><a href="admin-delete-data-user.php?id=<?= $row["id"]; ?>" class="nav-link">Ya</a></button>         
+                                    <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;" data-bs-toggle="modal" data-bs-target="#modalSuccessDeleteData"><a href="admin-delete-data-ruang.php?id=<?= $row["id"]; ?>" class="nav-link">Ya</a></button>         
                                 </div>
                             </div>
                         </div>
@@ -309,8 +312,8 @@
             </div>
         </div>
 
-        <!-- Modal Berhasil Hapus -->
-        <div class="modal fade" id="modalDeleteData" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <!-- Modal Berhasil Hapus
+        <div class="modal fade" id="modalSuccessDeleteData" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" data-bs-dismiss="modal">
                 <div class="modal-content p-4 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
                     <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
@@ -323,7 +326,23 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        <!-- Modal Gagal Hapus
+        <div class="modal fade" id="modalFailDeleteData" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" data-bs-dismiss="modal">
+                <div class="modal-content p-4 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
+                    <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
+                        <i class="position-absolute top-50 start-50 translate-middle fa-solid fa-check fa-2xl" style="color: #000000; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <div class="flex-column">
+                        <div>
+                            <h1 class="mx-4 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Data Ruangan Gagal Dihapus!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
       <!-- Modal Logout -->
       <div class="modal custom-modal fade" id="modalLogout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -338,9 +357,44 @@
             </div>
         </div>  
 
-      <!-- JavaScript -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-      <script src="https://kit.fontawesome.com/65ec807597.js" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <!-- JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/65ec807597.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+        <!-- <script>
+            $(document).ready(function() {
+                // Menangani klik tombol "Ya" di modal hapus
+                $('#modalDelete .btn').click(function() {
+                    var id = $(this).data('id');
+
+                    // Mengirim permintaan penghapusan ke server menggunakan AJAX
+                    $.ajax({
+                        url: 'admin-delete-data-ruang.php',
+                        type: 'GET',
+                        data: { id: id },
+                        success: function(response) {
+                            if (response === 'success') {
+                            $('#modalSuccessDeleteData').modal('show');
+                            // <?php
+                            //     echo "<script>
+                            //         setTimeout(function() {
+                            //             window.location.href = 'admin-data-ruang.php?id=$id';
+                            //         }, 3000);
+                            //     </script>";
+                            // ?>
+                            } else {
+                            $('#modalFailDeleteData').modal('show');
+                            }
+                        },
+                        error: function() {
+                            // Menampilkan modal gagal hapus jika terjadi kesalahan pada permintaan AJAX
+                            $('#modalFailDeleteData').modal('show');
+                        }
+                    });
+                });
+            });
+        </script> -->
+
     </body>
 </html>

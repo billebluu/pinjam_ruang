@@ -248,7 +248,7 @@
                                                     <th scope="col">Gender</th>
                                                     <th scope="col">No. Telp</th>
                                                     <th scope="col">Status</th>
-                                                    <th scope="col"></th>
+                                                    <th scope="col" colspan="2">Manajemen</th>
                                                   </tr>
                                                   
                                                     
@@ -266,12 +266,12 @@
                                                         <td><?= $row["phone"]; ?></td>
                                                         <td><?= $row["statusUser"]; ?></td>
                                                         <td>
-                                                            <div class=button-container>
+                                                            <!-- <div class=button-container> -->
                                                             <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 25px;"> <a href="admin-edit-data-user.php?id=<?= $row["id"]; ?>" class="nav-link">Edit</a></button>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 25px;" data-bs-toggle="modal" data-bs-target="#modalConfirmation"><a href="admin-delete-data-user.php?id=<?= $row["id"]; ?>" class="nav-link">Delete</a></button>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255);" data-bs-toggle="modal" data-bs-target="#modalDelete"> <a class="nav-link" >Delete</a></button>
-                                                            
-                                                            </div>
+                                                            <!-- </div> -->
+                                                        </td>
+                                                        <td>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 22px;" data-bs-toggle="modal" data-bs-target="#modalDelete"> <a class="nav-link" >Delete</a></button>
                                                         </td>
                                                       </tr>
                                                       <?php $i++; ?>
@@ -292,8 +292,8 @@
             </div>
         </div>
 
-        <!-- Modal Delete -->
-        <div class="modal fade" id="modalDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <!-- Modal Hapus Data User -->
+        <div class="modal fade" id="modalDelete" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content p-5 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
                     <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
@@ -314,31 +314,7 @@
             </div>
         </div>
 
-        <!-- Modal Validasi -->
-        <div class="modal fade" id="modalConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content p-5 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
-                    <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
-                        <i class="position-absolute top-50 start-50 translate-middle fa-solid fa-circle-exclamation fa-2xl" style="color: #000000; align-items: center; justify-content: center;"></i>
-                        </div>
-                            <div class="flex-column">
-                                <div>
-                                    <h1 class="mx-5 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Yakin untuk hapus?</h1>
-                                </div>
-                                <div class="mt-3">
-                                    <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal">Tidak</button>
-                                    <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;" data-bs-toggle="modal" data-bs-target="#modalValidasiData"><a href="admin-delete-data-user.php?id=<?= $row["id"]; ?>" class="nav-link">Ya</a></button>         
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-            </div>
-        </div>
-
-    
-
-        <!-- Modal Berhasil Hapus -->
+        <!-- Modal Berhasil Hapus
         <div class="modal fade" id="modalDeleteData" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" data-bs-dismiss="modal">
                 <div class="modal-content p-4 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
@@ -352,7 +328,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
       <!-- Modal Logout -->
       <div class="modal custom-modal fade" id="modalLogout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

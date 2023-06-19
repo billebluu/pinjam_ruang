@@ -250,7 +250,8 @@
                                                     <th scope="col">Kegiatan</th>
                                                     <th scope="col">Waktu</th>
                                                     <th scope="col">Tanggal</th>
-                                                    <th scope="col">Berkas</th>
+                                                    <th scope="col" colspan=2>Berkas</th>
+                                                    <th scope="col" colspan="1"></th>
                                                   </tr>
                                                   
                                                     
@@ -267,11 +268,15 @@
                                                         <td><?= date("H:i", strtotime($row["waktu"])); ?></td>
                                                         <td><?= date("d-m-Y", strtotime($row["tgl_awal"])); ?></td>
                                                         <td>
-                                                            <div class="button-container">
-                                                            <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="<?= $row["ktm"]; ?>">Lihat KTM</a></button>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="<?= $row["sik"]; ?>">Lihat SIK</a></button>
-                                                            <button class="button-action"><a class="nav-link" href="admin-more-data-laporan-pinjam.php?id=<?= $row['id']; ?>">More</a></button>
-                                                            </div>
+                                                            <!-- <div class="button-container"> -->
+                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding:7px 20px;"> <a class="nav-link" href="<?= $row["ktm"]; ?>">Lihat KTM</a></button>
+                                                            <!-- </div> -->
+                                                        </td>
+                                                        <td>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding:7px 20px;"> <a class="nav-link" href="<?= $row["sik"]; ?>">Lihat SIK</a></button>
+                                                        </td>
+                                                        <td>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding:7px 20px"><a class="nav-link" href="admin-more-data-laporan-pinjam.php?id=<?= $row['id']; ?>">More</a></button>
                                                         </td>
                                                       </tr>
                                                       <?php $i++; ?>
