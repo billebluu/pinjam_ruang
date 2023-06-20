@@ -197,9 +197,11 @@ if(!isset($_SESSION["login"])){
         </div>
         
       <section>
-      <div class="container-fluid" id="notification">
+      <div class="container-fluid">
         <h5 class="bg-title">Notifikasi</h5>
-        <?php foreach ($user as $row): ?>
+      </div>
+      <div class="container-fluid" id="notification"style="display:flex; flex-direction:column-reverse;">
+        <?php foreach (array_reverse($user) as $row): ?>
                   <div class="notification submitted" id="submittedNotification">
                     <i class="fa-regular fa-clock fa-2xl" style="color: #000000;"></i>
                     <p class="notifSubmittedMessage">Halo, <?= $row["nama_pengaju"]; ?>! Pengajuan peminjaman ruang <?= $row["nama_ruang"]; ?>
@@ -211,11 +213,11 @@ if(!isset($_SESSION["login"])){
                     <p class="notifAcceptedMessage">
                         Halo, <?= $row["nama_pengaju"]; ?>! Pengajuan peminjaman ruang <?= $row["nama_ruang"]; ?>
                         pada <?= getHari($row["tgl_awal"]); ?>, <?= date("d", strtotime($row["tgl_awal"])); ?> <?= getBulan($row["tgl_awal"]); ?> <?= date("Y", strtotime($row["tgl_awal"])); ?> pukul <?= date("H.i", strtotime($row["waktu"])); ?> WIB disetujui.
-                        Detail ajuan dapat dilihat di <a class="customLinkSuccess" type="button" data-bs-toggle="modal" data-bs-target="#modalDetail">sini</a>.
+                        Detail ajuan dapat dilihat di <a class="customLinkSuccess" type="button" data-bs-toggle="modal" data-bs-target="#modalDetail<?= $row["id_ajuan"]; ?>">sini</a>.
                     </p>
                 </div>
                  <!-- Modal -->
-                <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modalDetail<?= $row["id_ajuan"]; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content p-5" style="background-color:#c9efff">
                       <?php
@@ -277,41 +279,6 @@ if(!isset($_SESSION["login"])){
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
       <script src="https://kit.fontawesome.com/65ec807597.js" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-      <script>
-        // Mendapatkan nilai parameter 'status' dari URL
-        // $status = $_POST['status'];
-
-        // if (status === 'TERKIRIM') {
-        //   showSubmittedNotification(); // Panggil fungsi notifikasi sukses
-        // }
-
-        // Ambil referensi notifikasi
-        // Fungsi menampilkan notif
-        // var submittedNotification = document.getElementById("submittedNotification");
-        // function showSubmittedNotification() {
-        //   submittedNotification.classList.remove("hidden");
-        // }
-
-        // // Fungsi untuk mendapatkan nilai parameter URL berdasarkan nama
-        // function getParameterByName(name) {
-        //   var url = window.location.href;
-        //   name = name.replace(/[\[\]]/g, "\\$&");
-        //   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        //     results = regex.exec(url);
-        //   if (!results) return null;
-        //   if (!results[2]) return "";
-        //   return decodeURIComponent(results[2].replace(/\+/g, " "));
-        // }
-
-        // // Baca nilai parameter URL dengan nama 'status'
-        // var status = getParameterByName("status");
-
-        // // Cek nilai parameter URL untuk menentukan tindakan selanjutnya
-        // if (status === "submitted") {
-        //   showSubmittedNotification(); // Panggil fungsi notifikasi sukses
-        // }
-      </script>
 
     </body>
 </html>
