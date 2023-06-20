@@ -276,8 +276,32 @@
                                                             <!-- </div> -->
                                                         </td>
                                                         <td>
-                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 22px;" data-bs-toggle="modal" data-bs-target="#modalDelete"> <a class="nav-link" >Delete</a></button>
+                                                            <button class="button-action" style="background-color: rgb(201,239,255); padding: 7px 22px;" data-bs-toggle="modal" data-bs-target="#modalDelete<?= $row["id"]; ?>">
+                                                                <a class="nav-link">Delete</a>
+                                                            </button>
                                                         </td>
+
+                                                        <div class="modal fade" id="modalDelete<?= $row["id"]; ?>" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content p-5 d-flex flex-row" style="background-color:#c9efff; border-radius:30px; align-items: center; justify-items: center;">
+                                                                    <div class="position-relative" style="padding:50px; background-color: #71d4ff; border-radius: 30px;">
+                                                                        <i class="position-absolute top-50 start-50 translate-middle fa-solid fa-circle-exclamation fa-2xl" style="color: #000000; align-items: center; justify-content: center;"></i>
+                                                                    </div>
+                                                                    <div class="flex-column">
+                                                                        <div>
+                                                                            <h1 class="mx-5 fs-5 text-center" style="font-weight: bolder;" id="staticBackdropLabel">Yakin untuk hapus?</h1>
+                                                                        </div>
+                                                                        <div class="mt-3">
+                                                                            <button type="button" class="btn" style="margin-left: 41px; margin-right: 10px; padding-right:30px; padding-left:30px; background-color: #ee7d87; border-radius: 20px; color:black; align-items: center; justify-content: center;" data-bs-dismiss="modal">Tidak</button>
+                                                                            <button type="button" class="btn" style="padding-right:40px; padding-left:40px; background-color: #8de66a; border-radius: 20px; color: black; align-items: center; justify-content: center;" data-bs-toggle="modal" data-bs-target="#modalDeleteData" onclick="deleteData(this)">
+                                                                                <a href="admin-delete-data-jadwal-ruang.php?id=<?= $row["id"]; ?>" class="nav-link">Ya</a>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                       </tr>
                                                       <?php $i++; ?>
                                                       <?php endforeach; ?>
@@ -351,5 +375,12 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
       <script src="https://kit.fontawesome.com/65ec807597.js" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+      <script>
+        function deleteData(button) {
+            var id = button.getAttribute("data-id");
+            console.log("data-id:",id);
+            var url = "admin-delete-data-jadwal-ruang.php?id=" + id;
+            window.location.href = url;
+        </script>
     </body>
 </html>
