@@ -1,9 +1,9 @@
 <?php
-session_start();
-if(!isset($_SESSION["login"])){
-  header("Location: login.php");
-  exit;
-}
+    session_start();
+    if(!isset($_SESSION["login"])){
+    header("Location: login.php");
+    exit;
+    }
 
     require 'functions.php';
     $id = $_GET["id"];
@@ -53,8 +53,10 @@ if(!isset($_SESSION["login"])){
             if ($showSubmit == 0) {
                 $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
             }
+        }
+
+        
     }
-}
     // if(isset($_POST["submit"])){
     //     // var_dump($_POST);
     //     // echo "<br>";
@@ -272,7 +274,7 @@ if(!isset($_SESSION["login"])){
             <h5 class=bg-title>Formulir Peminjaman Ruang</h5>
 
             <!--Alert Notifikasi Submit Form-->
-            <div class="alert alert-danger alert-dismissible mt-4" id="myAlertFail">
+            <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
                 Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -282,7 +284,7 @@ if(!isset($_SESSION["login"])){
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
-            <div class="alert alert-success alert-dismissible mt-4" id="myAlertSuccess">
+            <div class="alert alert-success alert-submit-success alert-dismissible mt-4" id="myAlertSuccess">
                 Formulir peminjaman ruang berhasil dikirim.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -380,15 +382,19 @@ if(!isset($_SESSION["login"])){
     
     <script>
     $(document).ready(function() {
-        <?php if ($showSubmit == 1) { ?>
-            $(".alert-success").show();
-        <?php } elseif ($showSubmit == 0) { ?>
-            $(".alert-danger").show();
+        $(".alert").hide(); // Hide all alert elements
+
+        <?php if ($showSubmit == 0) { ?>
+            $(".alert-submit-fail").show(); // Show the alert-danger
+        <?php } elseif ($showSubmit == 1) { ?>
+            $(".alert-submit-success").show(); // Show the alert-success
         <?php } elseif ($showSubmit == 2) { ?>
-            $(".alert-unavailable-room").show(); //tambahan
-        <?php }?>
+            $(".alert-unavailable-room").show(); // Show the alert-unavailable-room
+        <?php } ?>
     });
-    </script>
+</script>
+
+
     <!-- <script>
         $(document).ready(function () {
            

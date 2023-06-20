@@ -10,27 +10,32 @@ if(!isset($_SESSION["login"])){
   $id = $_GET["id"];
   $data1 = "SELECT * FROM user WHERE id = $id";
   $user1 = query($data1)[0];
-  
 
-  $data = "SELECT * FROM data_pengajuan where id = $id ORDER BY tgl_awal DESC";
+  $data = "SELECT * FROM data_pengajuan where id = $id ORDER BY id_ajuan DESC";
   $user = query($data);
 
-  // Mengambil data untuk disimpan ke dalam variabel
-  $nama_pengaju = $user[0]["nama_pengaju"];
-  $nim_nip = $user[0]["nim_nip"];
-  $nama_ruang = $user[0]["nama_ruang"];
-  $kegiatan = $user[0]['kegiatan'];
-  $waktu = $user[0]["waktu"];
-  $formattedWaktu = date("H.i", strtotime($waktu));
-  $status = $user[0]["status"];
-  $statusUser = $user[0]['statusUser'];
+  if (!empty($array) && isset($array[0])) {
+    // Lakukan sesuatu dengan $array[0]
+    // Mengambil data untuk disimpan ke dalam variabel
+      $nama_pengaju = $user[0]["nama_pengaju"];
+      $nim_nip = $user[0]["nim_nip"];
+      $nama_ruang = $user[0]["nama_ruang"];
+      $kegiatan = $user[0]['kegiatan'];
+      $waktu = $user[0]["waktu"];
+      $formattedWaktu = date("H.i", strtotime($waktu));
+      $status = $user[0]["status"];
+      $statusUser = $user[0]['statusUser'];
 
-  // Format tanggal
-  $tgl_awal = $user[0]["tgl_awal"];
-  $hari = getHari($tgl_awal);
-  $tgl = date("d", strtotime($tgl_awal));
-  $bln = getBulan($tgl_awal);
-  $thn = date("Y", strtotime($tgl_awal));
+      // Format tanggal
+      $tgl_awal = $user[0]["tgl_awal"];
+      $hari = getHari($tgl_awal);
+      $tgl = date("d", strtotime($tgl_awal));
+      $bln = getBulan($tgl_awal);
+      $thn = date("Y", strtotime($tgl_awal));
+  } else {
+      // Array kosong atau elemen dengan indeks 0 tidak ada
+      echo "";
+  }
 ?>
 
 <!DOCTYPE html>
