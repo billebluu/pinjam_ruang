@@ -1,8 +1,8 @@
 <?php
     session_start();
     if(!isset($_SESSION["login"])){
-    header("Location: login.php");
-    exit;
+        header("Location: login.php");
+        exit;
     }
 
     require 'functions.php';
@@ -12,11 +12,9 @@
 
     $data2 = query("SELECT * FROM data_ruangan");
 
-    $showSucces = true;
-    $showDanger = true;
     $showSubmit;
 
-    if(isset($_POST["submit"])) {
+    if (isset($_POST["submit"])) {
         // Mendapatkan data dari form
         $tanggal = $_POST["tanggal"];
         $nama_ruang = $_POST["nama_ruang"];
@@ -28,66 +26,45 @@
         $result_check = mysqli_query($conn, $query_check);
         $count = mysqli_fetch_row($result_check)[0];
 
-        // Jika data pengajuan yang sama sudah ada, tampilkan pesan error
-        if($count > 0) {
-            $showSubmit = 2; //tambahan
-        } else {
-            $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
-    
-            if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['tanggal'], $_POST['nim_nip'], $_POST['waktu_awal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
-                // Cek apakah semua input yang diperlukan diisi
-                $id = $id; // Ganti dengan nilai id yang sesuai
-                $result = tambah($_POST, $id);
-                if ($result > 0) {
-                    $showSubmit = 1; // Jika berhasil, set $showSubmit menjadi 1
-                    // echo "
-                    // <script>
-                    //     var xhr = new XMLHttpRequest();
-                    //     xhr.open('POST', 'user-notifikasi.php', true);
-                    //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    //     xhr.send('status=TERKIRIM');
-                    // </script>
-                    // ";
-                }
-            }
-        
-            if ($showSubmit == 0) {
-                $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
+        // Menginisialisasi array response
+        $response = [
+            'showSubmit' => 0,
+            'alertHTML' => ''
+        ];
+
+        if ($count > 0) {
+            $response['showSubmit'] = 2;
+            $response['alertHTML'] = '
+                <div class="alert alert-danger alert-unavailable-room alert-dismissible mt-4" id="myAlertFail2">
+                    Ruang yang Anda pilih pada waktu tersebut sudah terisi. Silakan pilih ruangan lain!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>';
+        } elseif (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['tanggal'], $_POST['nim_nip'], $_POST['waktu_awal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
+            $id = $id; // Ganti dengan nilai id yang sesuai
+            $result = tambah($_POST, $id);
+            if ($result > 0) {
+                $response['showSubmit'] = 1;
+                $response['alertHTML'] = '
+                <div class="alert alert-success alert-submit-success alert-dismissible mt-4" id="myAlertSuccess">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <strong>Formulir peminjaman ruang berhasil dikirim.</strong>
+                </div>';
+            } else {
+                $response['showSubmit'] = 0;
+                $response['alertHTML'] = '
+                    <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
+                        Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
             }
         }
 
-        
+        // Mengirimkan data $response sebagai respon JSON
+        echo json_encode($response);
+        exit;
     }
-    // if(isset($_POST["submit"])){
-    //     // var_dump($_POST);
-    //     // echo "<br>";
-    //     // var_dump($FILE);
-    //     // die;
-
-    //     if(tambah($_POST, $id) < $id){
-    //         $showSubmit = 1;
-
-    //         echo "
-    //         <script>
-    //             var xhr = new XMLHttpRequest();
-    //             xhr.open('POST', 'user-notifikasi.php', true);
-    //             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //             xhr.send('status=TERKIRIM');
-    //         </script>
-    //         ";
-    //         // //Mengirimkan parameter status='TERKIRIM'
-    //         // $params = $_GET; // Mendapatkan parameter yang ada dalam URL saat ini
-    //         // $params['status'] = 'TERKIRIM'; // Menambahkan parameter 'status' dengan nilai 'TERKIRIM'
-
-    //         // $newUrl = $_SERVER['PHP_SELF'] . '?' . http_build_query($params);
-    //         // header("Location: $newUrl");
-    //         // exit();
-
-    //     }else{
-    //         $showSubmit = 0;
-    //     }
-    // }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -99,6 +76,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <link rel="icon" type="image/ico" href="logo2.png">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $(".alert").hide(); // Sembunyikan semua elemen alert
+
+        var data = <?php echo json_encode($response); ?>; // Ambil data JSON dari PHP dan simpan dalam variabel
+
+        if (data.showSubmit === 0) {
+            $("#alertContainer").html(data.alertHTML); // Perbarui elemen alertContainer dengan elemen alert dari data JSON
+            $(".alert").show(); // Tampilkan elemen alert yang baru ditambahkan
+        } else if (data.showSubmit === 1) {
+            $(".alert-submit-success").show(); // Tampilkan elemen alert-submit-success
+        } else if (data.showSubmit === 2) {
+            $(".alert-unavailable-room").show(); // Tampilkan elemen alert-unavailable-room
+        }
+    });
+    </script>
+
+
 
     <style>
         *{
@@ -275,6 +271,7 @@
             <h5 class=bg-title>Formulir Peminjaman Ruang</h5>
 
             <!--Alert Notifikasi Submit Form-->
+            <div id="alertContainer">
             <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
                 Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -289,8 +286,9 @@
                 Formulir peminjaman ruang berhasil dikirim.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            </div>
 
-            <form class="row needs-validation" action="" method="post" enctype="multipart/form-data" novalidate>
+            <form class="row needs-validation" action="" method="post" enctype="multipart/form-data" novalidate id="myForm">
             <div class="col">
                 <div class="col mb-3">
                     <label for="nama_pengaju" class="form-label">Nama Pengaju</label>
@@ -367,14 +365,14 @@
                     <input id="ktm" type="file" accept="application/pdf" name="ktm">
                 </div>
                 <!-- <div class="col-md-10">
-                    <label for="ktm" class="form-label">Upload KTM</label><br>
-                    <p style="font-size:14px">Format Nama File : Nama Lengkap_KTM.pdf</p>
-                    <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/1lBqem1sdjz5VNBS_nGEdAkhV9VdluxFU?usp=share_link">KTM</a></button>
-                    <br><br>
-                    <label for="sik" class="form-label">Upload SIK</label><br>
-                    <p style="font-size:14px">Format Nama File : Nama Lengkap_SIK.pdf</p>
-                    <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/12OdZkHodvOrIGJlkAoR934yThD1w9ksT?usp=share_link">SIK</a></button>                                                         -->
-                <!-- </div>  -->
+                //     <label for="ktm" class="form-label">Upload KTM</label><br>
+                //     <p style="font-size:14px">Format Nama File : Nama Lengkap_KTM.pdf</p>
+                //     <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/1lBqem1sdjz5VNBS_nGEdAkhV9VdluxFU?usp=share_link">KTM</a></button>
+                //     <br><br>
+                //     <label for="sik" class="form-label">Upload SIK</label><br>
+                //     <p style="font-size:14px">Format Nama File : Nama Lengkap_SIK.pdf</p>
+                //     <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/12OdZkHodvOrIGJlkAoR934yThD1w9ksT?usp=share_link">SIK</a></button>                                                         -->
+                  
                 <button class="btn btn-dark col mb-3 mt-4" type="submit" name="submit">Submit</button>
             </div>
         </form>
@@ -438,4 +436,38 @@
       </script>
     
 </body>
+
+<script>
+$(document).ready(function() {
+  $("#submitBtn").click(function(e) {
+    e.preventDefault(); // Menghentikan pengiriman form secara normal
+
+    var form = $("#myForm")[0];
+    var formData = new FormData(form);
+
+    $.ajax({
+      url: "proses_form.php",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        var result = JSON.parse(response);
+        if (result.showAlert === true) {
+          if (result.alertType === "danger") {
+            $(".alert-danger").html(result.alertMessage);
+            $(".alert-danger").show();
+          } else if (result.alertType === "success") {
+            $(".alert-success").html(result.alertMessage);
+            $(".alert-success").show();
+          }
+        } else {
+          form.submit(); // Melanjutkan pengiriman form jika tidak ada masalah
+        }
+      }
+    });
+  });
+});
+</script>
+
 </html>
