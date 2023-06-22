@@ -1,8 +1,8 @@
 <?php
     session_start();
     if(!isset($_SESSION["login"])){
-        header("Location: login.php");
-        exit;
+    header("Location: login.php");
+    exit;
     }
 
     require 'functions.php';
@@ -12,9 +12,11 @@
 
     $data2 = query("SELECT * FROM data_ruangan");
 
+    $showSucces = true;
+    $showDanger = true;
     $showSubmit;
 
-    if (isset($_POST["submit"])) {
+    if(isset($_POST["submit"])) {
         // Mendapatkan data dari form
         $tanggal = $_POST["tanggal"];
         $nama_ruang = $_POST["nama_ruang"];
@@ -26,12 +28,12 @@
         $result_check = mysqli_query($conn, $query_check);
         $count = mysqli_fetch_row($result_check)[0];
 
-        // Menginisialisasi array response
+        // Jika data pengajuan yang sama sudah ada, tampilkan pesan error
         $response = [
             'showSubmit' => 0,
             'alertHTML' => ''
         ];
-
+        
         if ($count > 0) {
             $response['showSubmit'] = 2;
             $response['alertHTML'] = '
@@ -45,12 +47,11 @@
             if ($result > 0) {
                 $response['showSubmit'] = 1;
                 $response['alertHTML'] = '
-                <div class="alert alert-success alert-submit-success alert-dismissible mt-4" id="myAlertSuccess">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <strong>Formulir peminjaman ruang berhasil dikirim.</strong>
-                </div>';
+                    <div class="alert alert-success alert-submit-success alert-dismissible mt-4" id="myAlertSuccess">
+                        Formulir peminjaman ruang berhasil dikirim.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
             } else {
-                $response['showSubmit'] = 0;
                 $response['alertHTML'] = '
                     <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
                         Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
@@ -58,13 +59,73 @@
                     </div>';
             }
         }
-
+        
         // Mengirimkan data $response sebagai respon JSON
         echo json_encode($response);
         exit;
-    }
-?>
+        
+        
+        
 
+        
+    }
+    // if(isset($_POST["submit"])){
+    //     // var_dump($_POST);
+    //     // echo "<br>";
+    //     // var_dump($FILE);
+    //     // die;
+
+    //     if(tambah($_POST, $id) < $id){
+    //         $showSubmit = 1;
+
+    //         echo "
+    //         <script>
+    //             var xhr = new XMLHttpRequest();
+    //             xhr.open('POST', 'user-notifikasi.php', true);
+    //             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //             xhr.send('status=TERKIRIM');
+    //         </script>
+    //         ";
+    //         // //Mengirimkan parameter status='TERKIRIM'
+    //         // $params = $_GET; // Mendapatkan parameter yang ada dalam URL saat ini
+    //         // $params['status'] = 'TERKIRIM'; // Menambahkan parameter 'status' dengan nilai 'TERKIRIM'
+
+    //         // $newUrl = $_SERVER['PHP_SELF'] . '?' . http_build_query($params);
+    //         // header("Location: $newUrl");
+    //         // exit();
+
+    //     }else{
+    //         $showSubmit = 0;
+    //     }
+    // }
+
+    // if($count > 0) {
+    //     $showSubmit = 2; //tambahan
+    // } else {
+    //     $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
+
+    //     if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['tanggal'], $_POST['nim_nip'], $_POST['waktu_awal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
+    //         // Cek apakah semua input yang diperlukan diisi
+    //         $id = $id; // Ganti dengan nilai id yang sesuai
+    //         $result = tambah($_POST, $id);
+    //         if ($result > 0) {
+    //             $showSubmit = 1; // Jika berhasil, set $showSubmit menjadi 1
+    //             // echo "
+    //             // <script>
+    //             //     var xhr = new XMLHttpRequest();
+    //             //     xhr.open('POST', 'user-notifikasi.php', true);
+    //             //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //             //     xhr.send('status=TERKIRIM');
+    //             // </script>
+    //             // ";
+    //         }
+    //     }
+    
+    //     if ($showSubmit == 0) {
+    //         $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
+    //     }
+    // }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,19 +140,23 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         $(document).ready(function() {
-        $(".alert").hide(); // Sembunyikan semua elemen alert
+            $(".alert").hide(); // Sembunyikan semua elemen alert
 
-        var data = <?php echo json_encode($response); ?>; // Ambil data JSON dari PHP dan simpan dalam variabel
-
-        if (data.showSubmit === 0) {
-            $("#alertContainer").html(data.alertHTML); // Perbarui elemen alertContainer dengan elemen alert dari data JSON
-            $(".alert").show(); // Tampilkan elemen alert yang baru ditambahkan
-        } else if (data.showSubmit === 1) {
-            $(".alert-submit-success").show(); // Tampilkan elemen alert-submit-success
-        } else if (data.showSubmit === 2) {
-            $(".alert-unavailable-room").show(); // Tampilkan elemen alert-unavailable-room
-        }
-    });
+            $.ajax({
+                type: 'POST',
+                url: 'nama_file_php.php', // Ganti 'nama_file_php.php' dengan nama file PHP Anda
+                data: $('form').serialize(),
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    $(".alert").hide(); // Sembunyikan semua elemen alert
+                    $("#myAlertFail2").remove(); // Hapus alert tidak tersedia jika ada
+                    $("#alertContainer").append(data.alertHTML); // Tambahkan alert baru ke dalam container
+                },
+                error: function() {
+                    alert('Terjadi kesalahan. Silakan coba lagi nanti.');
+                }
+            });
+        });
     </script>
 
 
@@ -271,7 +336,7 @@
             <h5 class=bg-title>Formulir Peminjaman Ruang</h5>
 
             <!--Alert Notifikasi Submit Form-->
-            <div id="alertContainer">
+            
             <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
                 Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -285,7 +350,6 @@
             <div class="alert alert-success alert-submit-success alert-dismissible mt-4" id="myAlertSuccess">
                 Formulir peminjaman ruang berhasil dikirim.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
             </div>
 
             <form class="row needs-validation" action="" method="post" enctype="multipart/form-data" novalidate id="myForm">
