@@ -213,9 +213,9 @@ $data_jadwal = query('SELECT * FROM data_jadwal');
                 <th scope="col">No.</th>
                 <th scope="col">Nama Ruang</th>
                 <th scope="col">Hari</th>
-                <th scope="col">Tanggal Awal</th>
-                <th scope="col">Tanggal Akhir</th>
-                <th scope="col">Waktu</th>
+                <th scope="col">Waktu Awal</th>
+                <th scope="col">Waktu Akhir</th>
+                <th scope="col">Tanggal</th>
                 <th scope="col">Kegiatan</th>
                 <th scope="col">Penyelenggara</th>
               </tr>
@@ -226,10 +226,10 @@ $data_jadwal = query('SELECT * FROM data_jadwal');
               <?php foreach ($data_jadwal as $row): ?>
               <td><?= $i; ?></td>
               <td><?= $row["nama_ruang"]; ?></td>
-              <td><?= getHari($row["tgl_awal"]) ?></td>
-              <td><?= date("d-m-Y", strtotime($row["tgl_awal"])); ?></td>
-              <td><?= date("d-m-Y", strtotime($row["tgl_akhir"])); ?></td>
-              <td><?= date("H:i", strtotime($row["waktu"])); ?></td>
+              <td><?= getHari($row["tanggal"]) ?></td>
+              <td><?= date("H:i", strtotime($row["waktu_awal"])); ?></td>
+              <td><?= date("H:i", strtotime($row["waktu_akhir"])); ?></td>
+              <td><?= date("d-m-Y", strtotime($row["tanggal"])); ?></td>
               <td><?= $row["kegiatan"]; ?></td>
               <td><?= $row["penyelenggara"]; ?></td>
               </tr>

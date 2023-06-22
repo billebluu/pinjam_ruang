@@ -261,16 +261,16 @@ if (isset($_POST["submit"])) {
                                                         <input type="text" class="form-control" id="kegiatan"  name="kegiatan" value="<?= $data_jadwal["kegiatan"]; ?>" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="tgl_awal" class="form-label">Tanggal</label>
-                                                        <input type="date" class="form-control" id="tgl_awal"  name="tgl_awal" value="<?= $data_jadwal["tgl_awal"]; ?>" required>
+                                                        <label for="tanggal" class="form-label">Tanggal</label>
+                                                        <input type="date" class="form-control" id="tanggal"  name="tanggal" value="<?= $data_jadwal["tanggal"]; ?>" required>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <label for="penyelenggara" class="form-label">Penyelenggara</label>
                                                         <input type="text" class="form-control" id="penyelenggara"  name="penyelenggara" value="<?= $data_jadwal["penyelenggara"]; ?>" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="waktu" class="form-label">Waktu</label>
-                                                        <input type="time" class="form-control" id="waktu" name="waktu" value="<?= $data_jadwal["waktu"]; ?>" required>
+                                                        <label for="waktu_awal" class="form-label">Waktu</label>
+                                                        <input type="time" class="form-control" id="waktu_awal" name="waktu_awal" value="<?= $data_jadwal["waktu_awal"]; ?>" required>
                                                     </div>
                                                     <div class="col-12">
                                                         <br><br>

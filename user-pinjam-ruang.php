@@ -18,12 +18,13 @@
 
     if(isset($_POST["submit"])) {
         // Mendapatkan data dari form
-        $tgl_awal = $_POST["tgl_awal"];
+        $tanggal = $_POST["tanggal"];
         $nama_ruang = $_POST["nama_ruang"];
-        $waktu = $_POST["waktu"];
+        $waktu_awal = $_POST["waktu_awal"];
+        $waktu_akhir = $_POST["waktu_akhir"];
 
         // Memeriksa apakah data jadwal ruangan sudah ada
-        $query_check = "SELECT COUNT(*) FROM data_jadwal WHERE tgl_awal = '$tgl_awal' AND nama_ruang = '$nama_ruang' AND waktu = '$waktu'";
+        $query_check = "SELECT COUNT(*) FROM data_jadwal WHERE tanggal = '$tanggal' AND nama_ruang = '$nama_ruang' AND waktu_awal = '$waktu_awal' AND waktu_akhir = '$waktu_akhir'";
         $result_check = mysqli_query($conn, $query_check);
         $count = mysqli_fetch_row($result_check)[0];
 
@@ -33,7 +34,7 @@
         } else {
             $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
     
-            if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['waktu'], $_POST['nim_nip'], $_POST['tgl_awal'], $_POST['tgl_akhir'], $_POST['gender'], $_POST['statusUser'])) {
+            if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['tanggal'], $_POST['nim_nip'], $_POST['waktu_awal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
                 // Cek apakah semua input yang diperlukan diisi
                 $id = $id; // Ganti dengan nilai id yang sesuai
                 $result = tambah($_POST, $id);
@@ -319,12 +320,12 @@
                     </div>
                 </div>
                 <div class="col mb-3">
-                    <label for="tgl_awal" class="form-label">Tanggal Awal</label>
-                    <input type="date" name="tgl_awal" id="tgl_awal" class="form-control" required>
+                    <label for="waktu_awal" class="form-label">Waktu Awal</label>
+                    <input type="time" name="waktu_awal" id="waktu_awal" class="form-control" required>
                 </div>
                 <div class="col mb-3">
-                    <label for="tgl_akhir" class="form-label">Tanggal Akhir</label>
-                    <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control" required>
+                    <label for="waktu_akhir" class="form-label">Waktu Akhir</label>
+                    <input type="time" name="waktu_akhir" id="waktu_akhir" class="form-control" required>
                 </div>
                 
             </div>
@@ -339,8 +340,8 @@
                     </select>
                 </div>
                 <div class="col mb-3">
-                    <label for="waktu" class="form-label">Waktu Peminjaman</label>
-                    <input type="time" name="waktu" id="waktu" class="form-control" required>
+                    <label for="tanggal" class="form-label">Tanggal Peminjaman</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
                 </div>
                 <div class="col mb-3">
                     <label for="kegiatan" class="form-label">Kegiatan</label>

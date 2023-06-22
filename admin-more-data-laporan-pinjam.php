@@ -286,20 +286,20 @@ if (isset($_POST["submit"])) {
                                                         <input type="text" class="form-control" id="phone"  name="phone" value="<?= $data_laporan["phone"]; ?>" disabled>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="waktu" class="form-label">Waktu</label>
-                                                        <input type="time" class="form-control" id="waktu"  name="waktu" value="<?= date("H:i", strtotime($data_laporan["waktu"])); ?>" disabled>
+                                                        <label for="tanggal" class="form-label">Tanggal</label> 
+                                                        <input type="date" class="form-control" id="tanggal"  name="tanggal" value="<?= $data_laporan["tanggal"]; ?>" disabled>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <label for="nim_nip" class="form-label">NIM/NIP</label>
                                                         <input type="text" class="form-control" id="nim_nip"  name="nim_nip" value="<?= $data_laporan["nim_nip"]; ?>" disabled>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="tgl_awal" class="form-label">Tanggal Awal Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tgl_awal"  name="tgl_awal" value="<?= $data_laporan["tgl_awal"]; ?>" disabled>
+                                                        <label for="waktu_awal" class="form-label">Waktu Awal</label>
+                                                        <input type="time" class="form-control" id="waktu_awal"  name="waktu_awal" value="<?= date("H:i", strtotime($data_laporan["waktu_awal"])); ?>" disabled>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="tgl_akhir" class="form-label">Tanggal Akhir Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tgl_akhir"  name="tgl_akhir" value="<?= $data_laporan["tgl_akhir"]; ?>" disabled>
+                                                        <label for="waktu_akhir" class="form-label">Waktu Akhir</label>
+                                                        <input type="time" class="form-control" id="waktu_akhir"  name="waktu_akhir" value="<?= date("H:i", strtotime($data_laporan["waktu_akhir"])); ?>" disabled>
                                                     </div><br><br><br><br><br>
                                                     <div class="col-md-5"></div>
                                                     <div class="col-md-5">

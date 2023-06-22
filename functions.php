@@ -168,8 +168,8 @@
         $nama_pengaju = htmlspecialchars($data["nama_pengaju"]);
         $nama_ruang = htmlspecialchars($data["nama_ruang"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
-        $waktu = htmlspecialchars($data["waktu"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
         $status = htmlspecialchars($data["status"]);
 
         $berkasLama = $data["berkasLama"];
@@ -185,8 +185,8 @@
         nama_pengaju ='$nama_pengaju',
         nama_ruang = '$nama_ruang',
         kegiatan = '$kegiatan',
-        waktu = '$waktu',
-        tgl_awal = '$tgl_awal',
+        tanggal = '$tanggal',
+        waktu_awal = '$waktu_awal',
         status = '$status',
         berkas = '$berkas'
         WHERE id=$id
@@ -214,10 +214,10 @@
         $email = htmlspecialchars($data["email"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $phone = htmlspecialchars($data["phone"]);
-        $waktu = htmlspecialchars($data["waktu"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
         $nim_nip = htmlspecialchars($data["nim_nip"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
-        $tgl_akhir = htmlspecialchars($data["tgl_akhir"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
+        $waktu_akhir = htmlspecialchars($data["waktu_akhir"]);
         $status = "PENDING";
 
         $sik = upload2();
@@ -225,7 +225,7 @@
             return false;
         }
 
-        $query = "INSERT INTO data_pengajuan VALUES ('','$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$waktu','$nim_nip','$tgl_awal','$tgl_akhir','$status','','','','$sik')";
+        $query = "INSERT INTO data_pengajuan VALUES ('','$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$tanggal','$nim_nip','$waktu_awal','$waktu_akhir','$status','','','','$sik')";
 
         mysqli_query($conn, $query);
 
@@ -326,8 +326,8 @@
         nama_pengaju LIKE '%$keyword%' OR
         nama_ruang LIKE '%$keyword%' OR
         kegiatan LIKE '%$keyword%' OR
-        waktu LIKE '%$keyword%' OR
-        tgl_awal LIKE '%$keyword%' OR
+        tanggal LIKE '%$keyword%' OR
+        waktu_awal LIKE '%$keyword%' OR
         status LIKE '%$keyword%' 
         ";
 
@@ -344,8 +344,8 @@
         $nama_pengaju = htmlspecialchars($data["nama_pengaju"]);
         $nama_ruang = htmlspecialchars($data["nama_ruang"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
-        $waktu = htmlspecialchars($data["waktu"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
 
         $berkasLama = $data["berkasLama"];
 
@@ -360,8 +360,8 @@
         nama_pengaju ='$nama_pengaju',
         nama_ruang = '$nama_ruang',
         kegiatan = '$kegiatan',
-        waktu = '$waktu',
-        tgl_awal = '$tgl_awal',
+        tanggal = '$tanggal',
+        waktu_awal = '$waktu_awal',
         berkas = '$berkas'
         WHERE id=$id
         "; 
@@ -386,8 +386,8 @@
         $nama_pengaju = htmlspecialchars($data["nama_pengaju"]);
         $nama_ruang = htmlspecialchars($data["nama_ruang"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
-        $waktu = htmlspecialchars($data["waktu"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
         $berkas = htmlspecialchars($data["berkas"]);
 
 
@@ -395,7 +395,7 @@
         if(!$berkas){
             return false;
         }
-        $query = "INSERT INTO data_laporan VALUES ('','$nama_pengaju','$nama_ruang','$kegiatan','$waktu','$tanggal','$berkas')";
+        $query = "INSERT INTO data_laporan VALUES ('','$nama_pengaju','$nama_ruang','$kegiatan','$tanggal','$waktu_awal','$berkas')";
 
         mysqli_query($conn, $query);
 
@@ -452,8 +452,8 @@
         nama_pengaju LIKE '%$keyword%' OR
         nama_ruang LIKE '%$keyword%' OR
         kegiatan LIKE '%$keyword%' OR
-        waktu LIKE '%$keyword%' OR
-        tgl_awal LIKE '%$keyword%'
+        tanggal LIKE '%$keyword%' OR
+        waktu_awal LIKE '%$keyword%'
         ";
 
         return query($query);
@@ -467,16 +467,16 @@
 
         $id = $data["id"];
         $nama_ruang = htmlspecialchars($data["nama_ruang"]);
-        $waktu = htmlspecialchars($data["waktu"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $penyelenggara = htmlspecialchars($data["penyelenggara"]);
 
         
         $query = "UPDATE data_jadwal SET
         nama_ruang ='$nama_ruang',
-        waktu ='$waktu',
-        tgl_awal ='$tgl_awal',
+        tanggal ='$tanggal',
+        waktu_awal ='$waktu_awal',
         kegiatan = '$kegiatan',
         penyelenggara = '$penyelenggara'
         WHERE id=$id
@@ -500,13 +500,13 @@
         global $conn;
 
         $nama_ruang = htmlspecialchars($data["nama_ruang"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
-        $tgl_akhir = htmlspecialchars($data["tgl_akhir"]);
-        $waktu = htmlspecialchars($data["waktu"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
+        $waktu_akhir = htmlspecialchars($data["waktu_akhir"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $penyelenggara = htmlspecialchars($data["penyelenggara"]);
 
-        $query = "INSERT INTO data_jadwal VALUES ('','$nama_ruang','$kegiatan','$penyelenggara','$waktu','$tgl_awal','$tgl_akhir')";
+        $query = "INSERT INTO data_jadwal VALUES ('','$nama_ruang','$kegiatan','$penyelenggara','$tanggal','$waktu_awal','$waktu_akhir')";
 
         mysqli_query($conn, $query);
 
@@ -518,7 +518,7 @@
         $query = "SELECT * FROM data_jadwal WHERE
         nama_ruang LIKE '%$keyword%' OR
         kegiatan LIKE '%$keyword%' OR
-        tgl_awal LIKE '%$keyword%' OR
+        tanggal LIKE '%$keyword%' OR
         penyelenggara LIKE '%$keyword%' 
         ";
 
@@ -530,7 +530,7 @@
     {
         $query = "SELECT * FROM data_jadwal WHERE
         nama_ruang LIKE '%$keyword1%' AND
-        tgl_Awal LIKE '%$keyword2%' 
+        tanggal LIKE '%$keyword2%' 
         ";
 
         return query($query);
@@ -554,7 +554,7 @@
         if(!$berkas){
             return false;
         }
-        $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$waktu','$nim_nip','$tgl_awal','$tgl_akhir','$status','','','','$sik')";
+        $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$tanggal','$nim_nip','$waktu_awal','$waktu_akhir','$status','','','','$sik')";
 
         mysqli_query($conn, $query);
 
@@ -614,10 +614,10 @@
         $email = htmlspecialchars($data["email"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $phone = htmlspecialchars($data["phone"]);
-        $waktu = htmlspecialchars($data["waktu"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
         $nim_nip = htmlspecialchars($data["nim_nip"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
-        $tgl_akhir = htmlspecialchars($data["tgl_akhir"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
+        $waktu_akhir = htmlspecialchars($data["waktu_akhir"]);
         $gender = isset($data["gender"]) ? htmlspecialchars($data["gender"]) : ""; // Mengambil nilai gender dari elemen radio button atau checkbox
         $statusUser = isset($data["statusUser"]) ? htmlspecialchars($data["statusUser"]) : ""; // Mengambil nilai statusUser dari elemen radio button atau checkbox
         
@@ -648,7 +648,7 @@
         $SIKterupload = move_uploaded_file($file_tmp_SIK, $linkBerkas_SIK);
     
         if ($KTMterupload && $SIKterupload) {
-            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$waktu','$nim_nip','$tgl_awal','$tgl_akhir','$status','$gender','$statusUser','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
+            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$tanggal','$nim_nip','$waktu_awal','$waktu_akhir','$status','$gender','$statusUser','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
     
             mysqli_query($conn, $query);
     
@@ -669,10 +669,10 @@
         $email = htmlspecialchars($data["email"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $phone = htmlspecialchars($data["phone"]);
-        $waktu = htmlspecialchars($data["waktu"]);
+        $tanggal = htmlspecialchars($data["tanggal"]);
         $nim_nip = htmlspecialchars($data["nim_nip"]);
-        $tgl_awal = htmlspecialchars($data["tgl_awal"]);
-        $tgl_akhir = htmlspecialchars($data["tgl_akhir"]);
+        $waktu_awal = htmlspecialchars($data["waktu_awal"]);
+        $waktu_akhir = htmlspecialchars($data["waktu_akhir"]);
         $gender = isset($data["gender"]) ? htmlspecialchars($data["gender"]) : ""; // Mengambil nilai gender dari elemen radio button atau checkbox
         $statusUser = isset($data["statusUser"]) ? htmlspecialchars($data["statusUser"]) : ""; // Mengambil nilai statusUser dari elemen radio button atau checkbox
         // Set status ajuan menjadi pending
@@ -703,7 +703,7 @@
 
         //
         if ($KTMterupload && $SIKterupload) {
-            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$waktu','$nim_nip','$tgl_awal','$tgl_akhir','$status','','','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
+            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$tanggal','$nim_nip','$waktu_awal','$waktu_akhir','$status','','','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
 
             mysqli_query($conn, $query);
     
@@ -943,13 +943,13 @@
         // mysqli_query($conn, "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik) && INSERT INTO data_jadwal (nama_ruang, kegiatan, penyelenggara, waktu, tgl_awal, tgl_akhir)
         //     SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id");
         // Memasukkan data pengajuan ke tabel data_laporan
-        $query_laporan = "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik)
-            SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, waktu, nim_nip, tgl_awal, tgl_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id";
+        $query_laporan = "INSERT INTO data_laporan (nama_pengaju, nama_ruang, email, kegiatan, phone, tanggal, nim_nip, waktu_awal, waktu_akhir, status, gender, statusUser, ktm, sik)
+            SELECT nama_pengaju, nama_ruang, email, kegiatan, phone, tanggal, nim_nip, waktu_awal, waktu_akhir, status, gender, statusUser, ktm, sik FROM data_pengajuan WHERE id_ajuan = $id";
         mysqli_query($conn, $query_laporan);
 
         // Memasukkan data pengajuan ke tabel data_jadwal dengan penyelenggara = nama_pengaju
-        $query_jadwal = "INSERT INTO data_jadwal (nama_ruang, kegiatan, penyelenggara, waktu, tgl_awal, tgl_akhir)
-            SELECT nama_ruang, kegiatan, nama_pengaju, waktu, tgl_awal, tgl_akhir FROM data_pengajuan WHERE id_ajuan = $id";
+        $query_jadwal = "INSERT INTO data_jadwal (nama_ruang, kegiatan, penyelenggara, tanggal, waktu_awal, waktu_akhir)
+            SELECT nama_ruang, kegiatan, nama_pengaju, tanggal, waktu_awal, waktu_akhir FROM data_pengajuan WHERE id_ajuan = $id";
         mysqli_query($conn, $query_jadwal);
 
         $query =  "UPDATE data_pengajuan SET status = '$data2' WHERE id_ajuan=$id";

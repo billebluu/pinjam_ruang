@@ -266,8 +266,8 @@
                                                         <td><?= $row["nama_pengaju"]; ?></td>
                                                         <td><?= $row["nama_ruang"]; ?></td>
                                                         <td><?= $row["kegiatan"]; ?></td>
-                                                        <td><?= date("H:i", strtotime($row["waktu"])); ?></td>
-                                                        <td><?= date("d-m-Y", strtotime($row["tgl_awal"])); ?></td>
+                                                        <td><?= date("H:i", strtotime($row["waktu_awal"])); ?></td>
+                                                        <td><?= date("d-m-Y", strtotime($row["tanggal"])); ?></td>
                                                        
                                                         <td>
                                                         <button name="lihatKTM" class="button-action" style="background-color: rgb(201,239,255);" data-bs-toggle="modal" data-bs-target="#modalPreviewKTM" data-ktm="<?php echo $row['KTM']; ?>">

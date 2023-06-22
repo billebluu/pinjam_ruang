@@ -248,7 +248,7 @@
                                                     <th scope="col">Nama Pengaju</th>
                                                     <th scope="col">Ruang</th>
                                                     <th scope="col">Kegiatan</th>
-                                                    <th scope="col">Waktu</th>
+                                                    <th scope="col">Waktu Awal</th>
                                                     <th scope="col">Tanggal</th>
                                                     <th scope="col" colspan=2>Berkas</th>
                                                     <th scope="col" colspan="1"></th>
@@ -265,8 +265,8 @@
                                                         <td><?= $row["nama_pengaju"]; ?></td>
                                                         <td><?= $row["nama_ruang"]; ?></td>
                                                         <td><?= $row["kegiatan"]; ?></td>
-                                                        <td><?= date("H:i", strtotime($row["waktu"])); ?></td>
-                                                        <td><?= date("d-m-Y", strtotime($row["tgl_awal"])); ?></td>
+                                                        <td><?= date("H:i", strtotime($row["waktu_awal"])); ?></td>
+                                                        <td><?= date("d-m-Y", strtotime($row["tanggal"])); ?></td>
                                                         <td>
                                                             <!-- <div class="button-container"> -->
                                                             <button class="button-action" style="background-color: rgb(201,239,255); padding:7px 20px;"> <a class="nav-link" href="<?= $row["ktm"]; ?>">Lihat KTM</a></button>
