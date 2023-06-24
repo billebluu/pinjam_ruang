@@ -257,16 +257,16 @@
                                                         <input type="text" class="form-control" id="kegiatan"  name="kegiatan" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="tgl_awal" class="form-label">Tanggal Awal Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tgl_awal"  name="tgl_awal" required>
+                                                        <label for="tanggal" class="form-label">Tanggal Peminjaman</label>
+                                                        <input type="date" class="form-control" id="tanggal"  name="tanggal" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="tgl_akhir" class="form-label">Tanggal Akhir Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tgl_akhir"  name="tgl_akhir" required>
+                                                        <label for="waktu_awal" class="form-label">Waktu Awal</label>
+                                                        <input type="time" class="form-control" id="waktu_awal" name="waktu_awal" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="waktu" class="form-label">Waktu</label>
-                                                        <input type="time" class="form-control" id="waktu" name="waktu" required>
+                                                        <label for="waktu_akhir" class="form-label">Waktu Akhir</label>
+                                                        <input type="time" class="form-control" id="waktu_akhir" name="waktu_akhir" required>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <label for="penyelenggara" class="form-label">Penyelenggara</label>

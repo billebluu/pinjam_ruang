@@ -506,7 +506,7 @@
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $penyelenggara = htmlspecialchars($data["penyelenggara"]);
 
-        $query = "INSERT INTO data_jadwal VALUES ('','$nama_ruang','$kegiatan','$penyelenggara','$tanggal','$waktu_awal','$waktu_akhir')";
+        $query = "INSERT INTO data_jadwal VALUES ('','$nama_ruang','$kegiatan','$penyelenggara','$waktu_awal','$tanggal','$waktu_akhir')";
 
         mysqli_query($conn, $query);
 
