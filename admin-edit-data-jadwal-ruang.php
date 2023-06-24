@@ -269,8 +269,12 @@ if (isset($_POST["submit"])) {
                                                         <input type="text" class="form-control" id="penyelenggara"  name="penyelenggara" value="<?= $data_jadwal["penyelenggara"]; ?>" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="waktu_awal" class="form-label">Waktu</label>
+                                                        <label for="waktu_awal" class="form-label">Waktu Awal</label>
                                                         <input type="time" class="form-control" id="waktu_awal" name="waktu_awal" value="<?= $data_jadwal["waktu_awal"]; ?>" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="waktu_akhir" class="form-label">Waktu Akhir</label>
+                                                        <input type="time" class="form-control" id="waktu_akhir" name="waktu_akhir" value="<?= $data_jadwal["waktu_akhir"]; ?>" required>
                                                     </div>
                                                     <div class="col-12">
                                                         <br><br>

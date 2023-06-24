@@ -469,6 +469,7 @@
         $nama_ruang = htmlspecialchars($data["nama_ruang"]);
         $tanggal = htmlspecialchars($data["tanggal"]);
         $waktu_awal = htmlspecialchars($data["waktu_awal"]);
+        $waktu_akhir = htmlspecialchars($data["waktu_akhir"]);
         $kegiatan = htmlspecialchars($data["kegiatan"]);
         $penyelenggara = htmlspecialchars($data["penyelenggara"]);
 
@@ -477,6 +478,7 @@
         nama_ruang ='$nama_ruang',
         tanggal ='$tanggal',
         waktu_awal ='$waktu_awal',
+        waktu_akhir ='$waktu_akhir',
         kegiatan = '$kegiatan',
         penyelenggara = '$penyelenggara'
         WHERE id=$id

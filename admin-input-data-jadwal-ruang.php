@@ -257,12 +257,12 @@
                                                         <input type="text" class="form-control" id="kegiatan"  name="kegiatan" required>
                                                     </div>
                                                     <div class="col-md-5">
-                                                        <label for="tanggal" class="form-label">Tanggal Peminjaman</label>
-                                                        <input type="date" class="form-control" id="tanggal"  name="tanggal" required>
-                                                    </div>
-                                                    <div class="col-md-5">
                                                         <label for="waktu_awal" class="form-label">Waktu Awal</label>
                                                         <input type="time" class="form-control" id="waktu_awal" name="waktu_awal" required>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label for="tanggal" class="form-label">Tanggal Peminjaman</label>
+                                                        <input type="date" class="form-control" id="tanggal"  name="tanggal" required>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <label for="waktu_akhir" class="form-label">Waktu Akhir</label>
