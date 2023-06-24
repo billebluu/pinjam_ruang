@@ -12,8 +12,6 @@
 
     $data2 = query("SELECT * FROM data_ruangan");
 
-    $showSucces = true;
-    $showDanger = true;
     $showSubmit;
 
     if(isset($_POST["submit"])) {
@@ -24,107 +22,32 @@
         $waktu_akhir = $_POST["waktu_akhir"];
 
         // Memeriksa apakah data jadwal ruangan sudah ada
-        $query_check = "SELECT COUNT(*) FROM data_jadwal WHERE tanggal = '$tanggal' AND nama_ruang = '$nama_ruang' AND waktu_awal = '$waktu_awal' AND waktu_akhir = '$waktu_akhir'";
+        $query_check = "SELECT COUNT(*) FROM data_jadwal WHERE tanggal = '$tanggal' AND nama_ruang = '$nama_ruang' AND waktu_awal = '$waktu_awal' AND waktu_akhir ='$waktu_akhir'";
         $result_check = mysqli_query($conn, $query_check);
         $count = mysqli_fetch_row($result_check)[0];
 
         // Jika data pengajuan yang sama sudah ada, tampilkan pesan error
-        $response = [
-            'showSubmit' => 0,
-            'alertHTML' => ''
-        ];
+        if($count > 0) {
+            $showSubmit = 2; //tambahan
+        } else {
+            $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
+    
+            if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['waktu_awal'], $_POST['nim_nip'], $_POST['tanggal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
+                // Cek apakah semua input yang diperlukan diisi
+                $id = $id; // Ganti dengan nilai id yang sesuai
+                $result = tambah($_POST, $id);
+                if ($result > 0) {
+                    $showSubmit = 1; // Jika berhasil, set $showSubmit menjadi 1
+                }
+            }
         
-        if ($count > 0) {
-            $response['showSubmit'] = 2;
-            $response['alertHTML'] = '
-                <div class="alert alert-danger alert-unavailable-room alert-dismissible mt-4" id="myAlertFail2">
-                    Ruang yang Anda pilih pada waktu tersebut sudah terisi. Silakan pilih ruangan lain!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>';
-        } elseif (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['tanggal'], $_POST['nim_nip'], $_POST['waktu_awal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
-            $id = $id; // Ganti dengan nilai id yang sesuai
-            $result = tambah($_POST, $id);
-            if ($result > 0) {
-                $response['showSubmit'] = 1;
-                $response['alertHTML'] = '
-                    <div class="alert alert-success alert-submit-success alert-dismissible mt-4" id="myAlertSuccess">
-                        Formulir peminjaman ruang berhasil dikirim.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>';
-            } else {
-                $response['alertHTML'] = '
-                    <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
-                        Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>';
+            if ($showSubmit == 0) {
+                $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
             }
         }
-        
-        // Mengirimkan data $response sebagai respon JSON
-        echo json_encode($response);
-        exit;
-        
-        
-        
 
         
     }
-    // if(isset($_POST["submit"])){
-    //     // var_dump($_POST);
-    //     // echo "<br>";
-    //     // var_dump($FILE);
-    //     // die;
-
-    //     if(tambah($_POST, $id) < $id){
-    //         $showSubmit = 1;
-
-    //         echo "
-    //         <script>
-    //             var xhr = new XMLHttpRequest();
-    //             xhr.open('POST', 'user-notifikasi.php', true);
-    //             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //             xhr.send('status=TERKIRIM');
-    //         </script>
-    //         ";
-    //         // //Mengirimkan parameter status='TERKIRIM'
-    //         // $params = $_GET; // Mendapatkan parameter yang ada dalam URL saat ini
-    //         // $params['status'] = 'TERKIRIM'; // Menambahkan parameter 'status' dengan nilai 'TERKIRIM'
-
-    //         // $newUrl = $_SERVER['PHP_SELF'] . '?' . http_build_query($params);
-    //         // header("Location: $newUrl");
-    //         // exit();
-
-    //     }else{
-    //         $showSubmit = 0;
-    //     }
-    // }
-
-    // if($count > 0) {
-    //     $showSubmit = 2; //tambahan
-    // } else {
-    //     $showSubmit = 0; // Inisialisasi $showSubmit dengan nilai 0
-
-    //     if (isset($_POST['nama_pengaju'], $_POST['nama_ruang'], $_POST['email'], $_POST['kegiatan'], $_POST['phone'], $_POST['tanggal'], $_POST['nim_nip'], $_POST['waktu_awal'], $_POST['waktu_akhir'], $_POST['gender'], $_POST['statusUser'])) {
-    //         // Cek apakah semua input yang diperlukan diisi
-    //         $id = $id; // Ganti dengan nilai id yang sesuai
-    //         $result = tambah($_POST, $id);
-    //         if ($result > 0) {
-    //             $showSubmit = 1; // Jika berhasil, set $showSubmit menjadi 1
-    //             // echo "
-    //             // <script>
-    //             //     var xhr = new XMLHttpRequest();
-    //             //     xhr.open('POST', 'user-notifikasi.php', true);
-    //             //     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    //             //     xhr.send('status=TERKIRIM');
-    //             // </script>
-    //             // ";
-    //         }
-    //     }
-    
-    //     if ($showSubmit == 0) {
-    //         $showSubmit = 0; // Jika gagal, tetapkan $showSubmit menjadi 0
-    //     }
-    // }
 ?>
 
 <!DOCTYPE html>
@@ -137,29 +60,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <link rel="icon" type="image/ico" href="logo2.png">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".alert").hide(); // Sembunyikan semua elemen alert
-
-            $.ajax({
-                type: 'POST',
-                url: 'nama_file_php.php', // Ganti 'nama_file_php.php' dengan nama file PHP Anda
-                data: $('form').serialize(),
-                success: function(response) {
-                    var data = JSON.parse(response);
-                    $(".alert").hide(); // Sembunyikan semua elemen alert
-                    $("#myAlertFail2").remove(); // Hapus alert tidak tersedia jika ada
-                    $("#alertContainer").append(data.alertHTML); // Tambahkan alert baru ke dalam container
-                },
-                error: function() {
-                    alert('Terjadi kesalahan. Silakan coba lagi nanti.');
-                }
-            });
-        });
-    </script>
-
-
 
     <style>
         *{
@@ -274,6 +174,7 @@
         .alert-success {
           display: none;
         }
+
         .button-action{
        font-family: 'Montserrat',sans-serif; 
        font-size: 90%; 
@@ -336,7 +237,6 @@
             <h5 class=bg-title>Formulir Peminjaman Ruang</h5>
 
             <!--Alert Notifikasi Submit Form-->
-            
             <div class="alert alert-danger alert-submit-fail alert-dismissible mt-4" id="myAlertFail">
                 Formulir peminjaman ruang gagal dikirim. Silakan periksa kembali data isian Anda!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -352,42 +252,42 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
-            <form class="row needs-validation" action="" method="post" enctype="multipart/form-data" novalidate id="myForm">
+            <form class="row needs-validation" action="" method="post" enctype="multipart/form-data" novalidate id="formPengajuan">
             <div class="col">
                 <div class="col mb-3">
                     <label for="nama_pengaju" class="form-label">Nama Pengaju</label>
-                    <input type="text" name="nama_pengaju" id="nama_pengaju" class="form-control" required>
+                    <input type="text" name="nama_pengaju" id="nama_pengaju" class="form-control" value="<?php echo isset($_POST['nama_pengaju']) ? $_POST['nama_pengaju'] : ''; ?>" required>
                 </div>
                 <div class="col mb-3">
-                    <label for="nama_ruang" class="form-label">No. Telepon</label>
-                    <input type="text" name="phone" id="phone" class="form-control" required>
+                    <label for="phone" class="form-label">No. Telepon</label>
+                    <input type="text" name="phone" id="phone" class="form-control" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : ''; ?>" required>
                 </div>
                 <div class="col mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" name="email" id="email" class="form-control" required>
+                    <input type="text" name="email" id="email" class="form-control" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" required>
                 </div>
                 <div class="col mb-3">
                     <label for="nim_nip" class="form-label">NIM / NIP</label>
-                    <input type="text" name="nim_nip" id="nim_nip" class="form-control" required>
+                    <input type="text" name="nim_nip" id="nim_nip" class="form-control" value="<?php echo isset($_POST['nim_nip']) ? $_POST['nim_nip'] : ''; ?>" required>
                 </div>
                 <div class="col mb-3">
                     <label class="form-label d-block">Jenis Kelamin</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="lakiLaki" type="radio" name="gender" value="Laki-laki" required>
+                        <input class="form-check-input" id="lakiLaki" type="radio" name="gender" value="Laki-laki" <?php echo (isset($_POST['gender']) && $_POST['gender'] === 'Laki-laki') ? 'checked' : ''; ?> required>
                         <label class="form-check-label" for="lakiLaki">Laki-laki</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="perempuan" type="radio" name="gender" value="Perempuan" required>
+                        <input class="form-check-input" id="perempuan" type="radio" name="gender" value="Perempuan" <?php echo (isset($_POST['gender']) && $_POST['gender'] === 'Perempuan') ? 'checked' : ''; ?> required>
                         <label class="form-check-label" for="perempuan">Perempuan</label>
                     </div>
                 </div>
                 <div class="col mb-3">
                     <label for="waktu_awal" class="form-label">Waktu Awal</label>
-                    <input type="time" name="waktu_awal" id="waktu_awal" class="form-control" required>
+                    <input type="time" name="waktu_awal" id="waktu_awal" class="form-control" value="<?php echo isset($_POST['waktu_awal']) ? $_POST['waktu_awal'] : ''; ?>" required>
                 </div>
                 <div class="col mb-3">
                     <label for="waktu_akhir" class="form-label">Waktu Akhir</label>
-                    <input type="time" name="waktu_akhir" id="waktu_akhir" class="form-control" required>
+                    <input type="time" name="waktu_akhir" id="waktu_akhir" class="form-control" value="<?php echo isset($_POST['waktu_akhir']) ? $_POST['waktu_akhir'] : ''; ?>" required>
                 </div>
                 
             </div>
@@ -397,26 +297,26 @@
                     <select class="form-select form-select-md" aria-label=".form-select-lg example" id="nama_ruang" name="nama_ruang">
                         <option selected></option>
                         <?php foreach ($data2 as $row) : ?>
-                            <option value="<?php echo $row['nama_ruang']; ?>"><?php echo $row['nama_ruang']; ?></option>
+                            <option value="<?php echo $row['nama_ruang']; ?>" <?php echo (isset($_POST['nama_ruang']) && $_POST['nama_ruang'] === $row['nama_ruang']) ? 'selected' : ''; ?>><?php echo $row['nama_ruang']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col mb-3">
                     <label for="tanggal" class="form-label">Tanggal Peminjaman</label>
-                    <input type="date" name="tanggal" id="tanggal" class="form-control" required>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control" value=<?php echo isset($_POST['tanggal']) ? $_POST['tanggal'] : ''; ?> required>
                 </div>
                 <div class="col mb-3">
                     <label for="kegiatan" class="form-label">Kegiatan</label>
-                    <input type="text" name="kegiatan" id="kegiatan" class="form-control" required>
+                    <input type="text" name="kegiatan" id="kegiatan" class="form-control" value="<?php echo isset($_POST['kegiatan']) ? $_POST['kegiatan'] : ''; ?>" required>
                 </div>
                 <div class="col mb-3">
                     <label class="form-label d-block">Status</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="mahasiswa" type="radio" name="statusUser" value="Mahasiswa" required>
+                        <input class="form-check-input" id="mahasiswa" type="radio" name="statusUser" value="Mahasiswa" <?php echo (isset($_POST['statusUser']) && $_POST['statusUser'] === 'Mahasiswa') ? 'checked' : ''; ?> required>
                         <label class="form-check-label" for="mahasiswa">Mahasiswa</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" id="dosen" type="radio" name="statusUser" value="Dosen" required>
+                        <input class="form-check-input" id="dosen" type="radio" name="statusUser" value="Dosen" <?php echo (isset($_POST['statusUser']) && $_POST['statusUser'] === 'Dosen') ? 'checked' : ''; ?> required>
                         <label class="form-check-label" for="dosen">Dosen</label>
                     </div>
                 </div>
@@ -428,18 +328,9 @@
                     <label for="ktm" class="form-label">Upload KTM</label><br>
                     <input id="ktm" type="file" accept="application/pdf" name="ktm">
                 </div>
-                <!-- <div class="col-md-10">
-                //     <label for="ktm" class="form-label">Upload KTM</label><br>
-                //     <p style="font-size:14px">Format Nama File : Nama Lengkap_KTM.pdf</p>
-                //     <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/1lBqem1sdjz5VNBS_nGEdAkhV9VdluxFU?usp=share_link">KTM</a></button>
-                //     <br><br>
-                //     <label for="sik" class="form-label">Upload SIK</label><br>
-                //     <p style="font-size:14px">Format Nama File : Nama Lengkap_SIK.pdf</p>
-                //     <button class="button-action" style="background-color: rgb(201,239,255);"> <a class="nav-link" href="https://drive.google.com/drive/folders/12OdZkHodvOrIGJlkAoR934yThD1w9ksT?usp=share_link">SIK</a></button>                                                         -->
-                  
-                <button class="btn btn-dark col mb-3 mt-4" type="submit" name="submit">Submit</button>
+                <button id="submitForm" class="btn btn-dark col mb-3 mt-4" type="submit" name="submit">Submit</button>
             </div>
-        </form>
+            </form>
         </div>
     </section>
     
@@ -455,83 +346,13 @@
             $(".alert-unavailable-room").show(); // Show the alert-unavailable-room
         <?php } ?>
     });
-</script>
+    </script>
 
-
-    <!-- <script>
-        $(document).ready(function () {
-           
-        }
-
-        )
-    </script> -->
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
       <script src="https://kit.fontawesome.com/65ec807597.js" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-      <script>
-        function skematik_jquery_js(){
-            wp_enqueue_script('jquery');
-        }
-
-        function wpt_register_js() {
-            wp_register_script(
-                'jquery.bootstrap.min', 
-                get_template_directory_uri() . '/js/bootstrap.min.js', 
-                'jquery'
-            );
-            wp_enqueue_script('jquery.bootstrap.min');
-        }
-
-        /* Load Scripts */
-        add_action( 'wp_enqueue_scripts', 'skematik_jquery_js' );
-        add_action( 'wp_enqueue_scripts', 'wpt_register_js' );
-
-        function wpt_register_css() {
-            wp_register_style(
-                'bootstrap.min', 
-                get_template_directory_uri() . '/css/bootstrap.min.css'
-            );
-            wp_enqueue_style( 'bootstrap.min' );
-        }
-        add_action( 'wp_enqueue_scripts', 'wpt_register_css' );
-      </script>
-    
 </body>
-
-<script>
-$(document).ready(function() {
-  $("#submitBtn").click(function(e) {
-    e.preventDefault(); // Menghentikan pengiriman form secara normal
-
-    var form = $("#myForm")[0];
-    var formData = new FormData(form);
-
-    $.ajax({
-      url: "proses_form.php",
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(response) {
-        var result = JSON.parse(response);
-        if (result.showAlert === true) {
-          if (result.alertType === "danger") {
-            $(".alert-danger").html(result.alertMessage);
-            $(".alert-danger").show();
-          } else if (result.alertType === "success") {
-            $(".alert-success").html(result.alertMessage);
-            $(".alert-success").show();
-          }
-        } else {
-          form.submit(); // Melanjutkan pengiriman form jika tidak ada masalah
-        }
-      }
-    });
-  });
-});
-</script>
-
 </html>
