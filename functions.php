@@ -525,6 +525,18 @@
         return query($query);
     }
 
+    function cekKetersediaan($keyword1,$keyword2,$keyword3,$keyword4)
+    {
+        $query = "SELECT * FROM data_jadwal WHERE
+        nama_ruang LIKE '%$keyword1%' AND
+        tanggal LIKE '%$keyword2%' AND
+        waktu_awal LIKE '%$keyword3%' AND
+        waktu_akhir LIKE '%$keyword4%' 
+        ";
+
+        return query($query);
+    }
+
 
     function searchJadwalUser($keyword1,$keyword2)
     {
@@ -648,7 +660,7 @@
         $SIKterupload = move_uploaded_file($file_tmp_SIK, $linkBerkas_SIK);
     
         if ($KTMterupload && $SIKterupload) {
-            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$tanggal','$nim_nip','$waktu_awal','$waktu_akhir','$status','$gender','$statusUser','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
+            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$waktu_awal','$nim_nip','$tanggal','$waktu_akhir','$status','$gender','$statusUser','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
     
             mysqli_query($conn, $query);
     
@@ -703,7 +715,7 @@
 
         //
         if ($KTMterupload && $SIKterupload) {
-            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$tanggal','$nim_nip','$waktu_awal','$waktu_akhir','$status','','','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
+            $query = "INSERT INTO data_pengajuan VALUES ('', '$id', '$nama_pengaju','$nama_ruang','$email','$kegiatan','$phone','$waktu_awal','$nim_nip','$tanggal','$waktu_akhir','$status','','','$namaFile_KTM','$ukuranFile_KTM','$ekstensiFile_KTM','$linkBerkas_KTM','$namaFile_SIK','$ukuranFile_SIK','$ekstensiFile_SIK','$linkBerkas_SIK')";
 
             mysqli_query($conn, $query);
     

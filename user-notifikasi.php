@@ -21,17 +21,19 @@ if(!isset($_SESSION["login"])){
       $nim_nip = $user[0]["nim_nip"];
       $nama_ruang = $user[0]["nama_ruang"];
       $kegiatan = $user[0]['kegiatan'];
-      $waktu = $user[0]["waktu"];
-      $formattedWaktu = date("H.i", strtotime($waktu));
+      $waktu_awal = $user[0]["waktu_awal"];
+      $waktu_akhir = $user[0]["waktu_akhir"];
+      $formattedWaktuAwal = date("H.i", strtotime($waktu_awal));
+      $formattedWaktuAkhir = date("H.i", strtotime($waktu_akhir));
       $status = $user[0]["status"];
       $statusUser = $user[0]['statusUser'];
 
       // Format tanggal
-      $tgl_awal = $user[0]["tgl_awal"];
-      $hari = getHari($tgl_awal);
-      $tgl = date("d", strtotime($tgl_awal));
-      $bln = getBulan($tgl_awal);
-      $thn = date("Y", strtotime($tgl_awal));
+      $tanggal = $user[0]["tanggal"];
+      $hari = getHari($tanggal);
+      $tgl = date("d", strtotime($tanggal));
+      $bln = getBulan($tanggal);
+      $thn = date("Y", strtotime($tanggal));
   } else {
       // Array kosong atau elemen dengan indeks 0 tidak ada
       echo "";
@@ -205,14 +207,14 @@ if(!isset($_SESSION["login"])){
                   <div class="notification submitted" id="submittedNotification">
                     <i class="fa-regular fa-clock fa-2xl" style="color: #000000;"></i>
                     <p class="notifSubmittedMessage">Halo, <?= $row["nama_pengaju"]; ?>! Pengajuan peminjaman ruang <?= $row["nama_ruang"]; ?>
-                    pada <?= getHari($row["tgl_awal"]); ?>, <?= date("d", strtotime($row["tgl_awal"])); ?> <?= getBulan($row["tgl_awal"]); ?> <?= date("Y", strtotime($row["tgl_awal"])); ?> pukul <?= date("H.i", strtotime($row["waktu"])); ?> WIB berhasil dikirim. Mohon menunggu proses validasi.</p>
+                    pada <?= getHari($row["tanggal"]); ?>, <?= date("d", strtotime($row["tanggal"])); ?> <?= getBulan($row["tanggal"]); ?> <?= date("Y", strtotime($row["tanggal"])); ?> pukul <?= date("H.i", strtotime($row["waktu_awal"])); ?> - <?= date("H.i", strtotime($row["waktu_akhir"])); ?> WIB berhasil dikirim. Mohon menunggu proses validasi.</p>
                   </div> 
             <?php if ($row["status"] == 'DITERIMA'): ?>
                 <div class="notification accepted" id="acceptedNotification">
                     <i class="fa-solid fa-check fa-2xl" style="color: #000000;"></i>
                     <p class="notifAcceptedMessage">
                         Halo, <?= $row["nama_pengaju"]; ?>! Pengajuan peminjaman ruang <?= $row["nama_ruang"]; ?>
-                        pada <?= getHari($row["tgl_awal"]); ?>, <?= date("d", strtotime($row["tgl_awal"])); ?> <?= getBulan($row["tgl_awal"]); ?> <?= date("Y", strtotime($row["tgl_awal"])); ?> pukul <?= date("H.i", strtotime($row["waktu"])); ?> WIB disetujui.
+                        pada <?= getHari($row["tanggal"]); ?>, <?= date("d", strtotime($row["tanggal"])); ?> <?= getBulan($row["tanggal"]); ?> <?= date("Y", strtotime($row["tanggal"])); ?> pukul <?= date("H.i", strtotime($row["waktu_awal"])); ?> - <?= date("H.i", strtotime($row["waktu_akhir"])); ?> WIB disetujui.
                         Detail ajuan dapat dilihat di <a class="customLinkSuccess" type="button" data-bs-toggle="modal" data-bs-target="#modalDetail<?= $row["id_ajuan"]; ?>">sini</a>.
                     </p>
                 </div>
@@ -244,11 +246,11 @@ if(!isset($_SESSION["login"])){
                                 </tr>
                                 <tr class="bg-table-color">
                                     <th scope="col">Tanggal</th>
-                                    <th scope="col"> : ' . getHari($row["tgl_awal"]). ', ' .date("d", strtotime($row["tgl_awal"])). ' ' .getBulan($row["tgl_awal"]). ' ' .date("Y", strtotime($row["tgl_awal"])). '</th>
+                                    <th scope="col"> : ' . getHari($row["tanggal"]). ', ' .date("d", strtotime($row["tanggal"])). ' ' .getBulan($row["tanggal"]). ' ' .date("Y", strtotime($row["tanggal"])). '</th>
                                 </tr>
                                 <tr class="bg-table-color">
                                     <th scope="col">Waktu</th>
-                                    <th scope="col"> : ' .date("H.i", strtotime($row["waktu"])). ' WIB</th>
+                                    <th scope="col"> : ' .date("H.i", strtotime($row["waktu_awal"])). ' - ' .date("H.i", strtotime($row["waktu_akhir"])). ' WIB</th>
                                 </tr>
                                 <tr class="bg-table-color">
                                     <th scope="col">Kegiatan</th>
@@ -266,7 +268,7 @@ if(!isset($_SESSION["login"])){
                     <i class="fa-solid fa-xmark fa-2xl" style="color: #000000;"></i>
                     <p class="notifRejectedMessage">
                         Halo, <?= $row["nama_pengaju"]; ?>! Pengajuan peminjaman ruang <?= $row["nama_ruang"]; ?>
-                        pada <?= getHari($row["tgl_awal"]); ?>, <?= date("d", strtotime($row["tgl_awal"])); ?> <?= getBulan($row["tgl_awal"]); ?> <?= date("Y", strtotime($row["tgl_awal"])); ?> pukul <?= date("H.i", strtotime($row["waktu"])); ?> WIB tidak disetujui.
+                        pada <?= getHari($row["tanggal"]); ?>, <?= date("d", strtotime($row["tanggal"])); ?> <?= getBulan($row["tanggal"]); ?> <?= date("Y", strtotime($row["tanggal"])); ?> pukul <?= date("H.i", strtotime($row["waktu_awal"])); ?> - <?= date("H.i", strtotime($row["waktu_akhir"])); ?> WIB tidak disetujui.
                     </p>
                 </div>
             <?php endif; ?>
